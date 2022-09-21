@@ -19,8 +19,8 @@ const columns: ColumnsType<IQuestion> = [
     },
     {
         title: 'Группа',
-        dataIndex : 'questionGroupLabel',
-        key: 'questionGroupLabel'
+        dataIndex : 'themeLabel',
+        key: 'themeLabel'
     },
 ]
 

@@ -12,7 +12,7 @@ class Theme(BasicsModelMixin, models.Model):
 class Question(BasicsModelMixin, models.Model):
     label = models.CharField(max_length=200)
 
-    question_group = models.ForeignKey(Theme, on_delete=models.CASCADE)
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
     
     class prices:
         p100 = 100
@@ -32,5 +32,5 @@ class Question(BasicsModelMixin, models.Model):
     price = models.IntegerField('Цена', choices=PRICE_CHOICES)
 
     @property
-    def question_group_label(self):
-        return self.question_group.label
+    def theme_label(self):
+        return self.theme.label

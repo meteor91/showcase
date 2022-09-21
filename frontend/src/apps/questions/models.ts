@@ -2,7 +2,7 @@ export interface IQuestion {
     id: string;
     label: string;
     price: number;
-    questionGroupLabel: string;
+    themeLabel: string;
 }
 
 export interface ITheme {

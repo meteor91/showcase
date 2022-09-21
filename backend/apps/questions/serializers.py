@@ -5,7 +5,7 @@ from .models import Question, Theme
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ['id', 'label', 'price', 'question_group_label',]
+        fields = ['id', 'label', 'price', 'theme_label',]
 
 
 class ThemeSerializer(serializers.ModelSerializer):

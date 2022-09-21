@@ -11,11 +11,11 @@ class QuestionAdminForm(forms.ModelForm):
     question_group = QuestionChoiceField(queryset=Theme.objects.all())
     class Meta:
         model = Question
-        fields = ('label', 'price', 'question_group',)    
+        fields = ('label', 'price', 'theme',)    
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('label', 'price', 'question_group_label', 'created_by',)
+    list_display = ('label', 'price', 'theme_label', 'created_by',)
     # exclude = ('created_by',)
     form = QuestionAdminForm
 
@@ -24,7 +24,7 @@ class QuestionAdmin(admin.ModelAdmin):
         return super().save_model(request, obj, form, change)
 
 @admin.register(Theme)
-class QuestionGroupAdmin(admin.ModelAdmin):
+class ThemeAdmin(admin.ModelAdmin):
     list_display = ('label', 'created_by',)
     exclude = ('created_by',)
 
