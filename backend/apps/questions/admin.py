@@ -1,14 +1,14 @@
 from django.contrib import admin
 from django import forms
 
-from .models import Question, QuestionGroup
+from .models import Question, Theme
 
 class QuestionChoiceField(forms.ModelChoiceField):
      def label_from_instance(self, obj):
          return obj.label
 
 class QuestionAdminForm(forms.ModelForm):
-    question_group = QuestionChoiceField(queryset=QuestionGroup.objects.all())
+    question_group = QuestionChoiceField(queryset=Theme.objects.all())
     class Meta:
         model = Question
         fields = ('label', 'price', 'question_group',)    
@@ -23,7 +23,7 @@ class QuestionAdmin(admin.ModelAdmin):
         obj.created_by = request.user
         return super().save_model(request, obj, form, change)
 
-@admin.register(QuestionGroup)
+@admin.register(Theme)
 class QuestionGroupAdmin(admin.ModelAdmin):
     list_display = ('label', 'created_by',)
     exclude = ('created_by',)

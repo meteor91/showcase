@@ -6,13 +6,13 @@ from users.models import User
 
 # Create your models here.
 
-class QuestionGroup(BasicsModelMixin, models.Model):
+class Theme(BasicsModelMixin, models.Model):
     label = models.CharField(max_length=200)
 
 class Question(BasicsModelMixin, models.Model):
     label = models.CharField(max_length=200)
 
-    question_group = models.ForeignKey(QuestionGroup, on_delete=models.CASCADE)
+    question_group = models.ForeignKey(Theme, on_delete=models.CASCADE)
     
     class prices:
         p100 = 100
