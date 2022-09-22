@@ -1,6 +1,6 @@
 export interface IPaginatedData<T> {
     count: number;
-    next: number;
-    previous: number;
+    next: string;
+    previous: string;
     results: T[];
 }

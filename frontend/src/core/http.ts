@@ -9,14 +9,17 @@ export const http = axios.create({
 });
 
 http.interceptors.response.use(function (response) {
-    //TODO нужно настроить
-    return adaptFromApi(response);
+    //TODO: нежелательная мутация
+    response.data = adaptFromApi(response.data)
+    return response
 }, function (error) {
     return Promise.reject(error);
 });
 
 // Add a request interceptor
 http.interceptors.request.use(function (config) {
+    //TODO: нежелательная мутация
+    config.data = adaptToApi(config.data);
     return config;
 }, function (error) {
     return Promise.reject(error);

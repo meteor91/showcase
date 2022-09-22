@@ -11,11 +11,11 @@ class QuestionAdminForm(forms.ModelForm):
     question_group = QuestionChoiceField(queryset=Theme.objects.all())
     class Meta:
         model = Question
-        fields = ('label', 'price', 'theme',)    
+        fields = ('label',  'answer', 'price', 'theme',)    
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('label', 'price', 'theme_label', 'created_by',)
+    list_display = ('label', 'price', 'theme_label', 'created_by', 'answer',)
     # exclude = ('created_by',)
     form = QuestionAdminForm
 

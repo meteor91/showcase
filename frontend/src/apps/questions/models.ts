@@ -1,11 +1,13 @@
 export interface IQuestion {
-    id: string;
+    id?: string;
     label: string;
+    answer: string;
     price: number;
-    themeLabel: string;
+    themeLabel?: string;
 }
 
 export interface ITheme {
-    id: string;
+    id?: string;
     label: string;
+    questionSet?: IQuestion[]
 }

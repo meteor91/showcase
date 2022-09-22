@@ -13,14 +13,14 @@ export const MainMenu: React.FC = () => {
             defaultSelectedKeys={[location.pathname]}
             style={{height:"100vh"}}
         >
-        <Menu.Item key="/questions">
-          <Link to="/questions">
+        <Menu.Item key="/questions/list">
+          <Link to="/questions/list">
             <BulbOutlined />
             <span>Вопросы</span>
           </Link>
         </Menu.Item>
-        <Menu.Item key="/themes">
-          <Link to="/themes">
+        <Menu.Item key="/themes/list">
+          <Link to="/themes/list">
             <BulbOutlined />
             <span>Тематика</span>
           </Link>

@@ -11,7 +11,7 @@ class Theme(BasicsModelMixin, models.Model):
 
 class Question(BasicsModelMixin, models.Model):
     label = models.CharField(max_length=200)
-
+    answer = models.CharField(max_length=200)
     theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
     
     class prices:
