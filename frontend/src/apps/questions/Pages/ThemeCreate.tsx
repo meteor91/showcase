@@ -1,42 +1,13 @@
 import React from 'react';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Space, Select  } from 'antd';
-// import { useForm, Controller, SubmitHandler } from "react-hook-form";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useMutation } from 'react-query';
-import { ITheme } from '../models';
-import { dataUtils } from 'core/utils';
 import { createTheme } from '../api';
 
 const { Option } = Select;
 
-interface IFormInput {
-    label: string;
-    lastName: string;
-    iceCreamType: {label: string; value: string };
-}
-
-const defVal = {
-    "label": "tjgj",
-    "questionSet": [
-        {
-            "label": "yjhgj",
-            "answer": "hgjhj",
-            "price": "200"
-        },
-        {
-            "label": "yutyu",
-            "answer": "khjkh",
-            "price": "300"
-        }
-    ]
-}
-
 export const ThemeCreate: React.FC = () => {
-    const params = useParams();
-    // const { register, handleSubmit } = useForm<ITheme>();
-    const [form] = Form.useForm();
-
     const mutation = useMutation(createTheme)
     const navigate = useNavigate();
 
