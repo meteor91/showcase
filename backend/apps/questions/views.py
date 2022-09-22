@@ -13,7 +13,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
 
 class ThemeViewSet(viewsets.ModelViewSet):
     serializer_class = ThemeSerializer
-    queryset =  Theme.objects.all()
+    queryset =  Theme.objects.all().order_by('-created_at')
 
     # def create(self, request, *args, **kwargs):
     #     print('create')
