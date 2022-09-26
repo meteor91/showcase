@@ -4,7 +4,6 @@ import { Button, Form, Input, Space, Select  } from 'antd';
 import { useNavigate } from "react-router-dom";
 import { useMutation } from 'react-query';
 import { createTheme } from '../api';
-
 const { Option } = Select;
 
 export const ThemeCreate: React.FC = () => {
@@ -68,7 +67,7 @@ export const ThemeCreate: React.FC = () => {
             )}
           </Form.List>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" disabled={mutation.isLoading}>
               Submit
             </Button>
           </Form.Item>

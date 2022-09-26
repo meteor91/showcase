@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets
+import time
 
 from .models import Question, Theme
 from users.models import User
@@ -21,5 +22,6 @@ class ThemeViewSet(viewsets.ModelViewSet):
     #     return super().create(request, *args, **kwargs)
 
     def perform_create(self, serializer):
+        time.sleep(5)
         serializer.save(created_by=User.objects.all()[0])
         # return super().perform_create(serializer)

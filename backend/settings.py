@@ -48,8 +48,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     
-    "users.apps.UsersConfig",
-    "questions.apps.QuestionsConfig",
+    'users.apps.UsersConfig',
+    'questions.apps.QuestionsConfig',
 ]
 
 MIDDLEWARE = [
@@ -62,6 +62,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    #TODO: настроить для продакшна
+    'middlewares.ResponseDelayMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'

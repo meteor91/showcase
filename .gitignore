@@ -114,6 +114,7 @@ sftp-config.json
 frontend/node_modules
 backend/media
 backend/locale/**/*.mo
+backend/venv
 database*.json
 backend/staticfiles/js/bundle.js
 backend/staticfiles/js/vendor.bundle.js

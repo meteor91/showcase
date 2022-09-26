@@ -1,7 +1,15 @@
 export interface IPaginatedData<T> {
     total: number;
     offset?: number;
-    // next: string;
-    // previous: string;
     results: T[];
+}
+
+export interface IServerError {
+    code: string;
+    message: string;
+    response: {
+        data: {
+            [key: string]: string;
+        }
+    }
 }
