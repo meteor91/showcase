@@ -16,12 +16,6 @@ class ThemeViewSet(viewsets.ModelViewSet):
     serializer_class = ThemeSerializer
     queryset =  Theme.objects.all().order_by('-created_at')
 
-    # def create(self, request, *args, **kwargs):
-    #     print('create')
-    #     # theme = Theme.objects.create(request.va)
-    #     return super().create(request, *args, **kwargs)
-
     def perform_create(self, serializer):
-        time.sleep(5)
+        time.sleep(3)
         serializer.save(created_by=User.objects.all()[0])
-        # return super().perform_create(serializer)

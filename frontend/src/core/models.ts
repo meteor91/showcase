@@ -1,15 +1,12 @@
+/**
+ * Структура пагинированного списка.
+ *
+ * @prop total Общее количество элементов.
+ * @prop offset Отступ от начала.
+ * @prop result Текущий срез элементов.
+ */
 export interface IPaginatedData<T> {
     total: number;
-    offset?: number;
+    offset: number;
     results: T[];
-}
-
-export interface IServerError {
-    code: string;
-    message: string;
-    response: {
-        data: {
-            [key: string]: string;
-        }
-    }
 }
