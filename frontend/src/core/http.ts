@@ -1,25 +1,32 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { notification } from 'antd';
 import { adaptFromApi, adaptToApi } from './utils';
 
 export const http = axios.create({
-  baseURL: "http://localhost:8000/api",
-  headers: {
-    "Content-type": "application/json"
-  }
+    baseURL: "http://127.0.0.1:3000/api",
+    headers: {
+        "Content-type": "application/json"
+    },
+    withCredentials: true,
 });
+
+const serverNotRespondingErrorNotification = 'Что то пошло не так, попробуйте еще раз';
 
 http.interceptors.response.use(
     (response: AxiosResponse) => {
         //TODO: нежелательная мутация
         response.data = adaptFromApi(response.data);
-        // debugger
         return response;
     },
     (error: AxiosError) => {
+        if (error.response?.status === 401) {
+            //TODO: продумать протухание сессии.
+        }
+
         if (error.response) {
             error.response.data = adaptFromApi(error.response.data);
         }
+
         return Promise.reject(error);
     }
 );
@@ -40,18 +47,32 @@ http.interceptors.request.use(
  * (Убрал метаданные Axios, они избыточны для работы на уровне бизнес логики)
  * 
  * @param url URL реста.
- * @param data Тело запроса.
+ * @param [data] Тело запроса.
  */
-export const post = <T>(url: string, data: T): Promise<T> => {
+export const post = <T, R = T>(url: string, data?: T): Promise<R> => {
     return http.post(url, data).then(
-        (result: AxiosResponse<T>) => result.data,
-        (result: AxiosError<T>) => {
+        (result: AxiosResponse<R>) => result.data,
+        (result: AxiosError<R>) => {
             if (result.response) {
                 return Promise.reject(result.response.data);
             } else {
-                notification.open({message: 'Что то пошло не так, попробуйте еще раз'});
+                notification.open({message: serverNotRespondingErrorNotification});
                 return Promise.reject([]);
             }
         }
     );
-}
+};
+
+export const get = <R>(url: string): Promise<R> => {
+    return http.get(url).then(
+        (result: AxiosResponse<R>) => result.data,
+        (result: AxiosError<R>) => {
+            if (result.response) {
+                return Promise.reject(result.response.data);
+            } else {
+                notification.open({message: serverNotRespondingErrorNotification});
+                return Promise.reject([]);
+            }
+        }
+    )
+};

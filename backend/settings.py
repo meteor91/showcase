@@ -1,4 +1,7 @@
 import os, sys
+from datetime import timedelta
+from rest_framework.settings import api_settings
+
 """
 Django settings for backend project.
 
@@ -47,6 +50,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'corsheaders',
+    'knox',
     
     'users.apps.UsersConfig',
     'questions.apps.QuestionsConfig',
@@ -140,9 +144,19 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ],
-    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     'DEFAULT_PAGINATION_CLASS': 'core.paginations.LimitOffsetPaginationExtended',
+    'DEFAULT_AUTHENTICATION_CLASSES': ('users.auth.TokenAuthenticationViaCookie',),
+}
+
+REST_KNOX = {
+    'SECURE_HASH_ALGORITHM': 'cryptography.hazmat.primitives.hashes.SHA512',
+    'AUTH_TOKEN_CHARACTER_LENGTH': 64,
+    'TOKEN_TTL': timedelta(hours=10),
+    'USER_SERIALIZER': 'knox.serializers.UserSerializer',
+    'TOKEN_LIMIT_PER_USER': None,
+    'AUTO_REFRESH': False,
+    'EXPIRY_DATETIME_FORMAT': api_settings.DATETIME_FORMAT,
 }

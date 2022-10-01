@@ -50,7 +50,7 @@ export const ThemeCreate: React.FC = () => {
                                 validateStatus={questionsSetErrors[key]?.label ? 'error' : ''}
                                 help={questionsSetErrors[key]?.label}
                             >
-                            <Input placeholder="Вопрос" />
+                                <Input placeholder="Вопрос" />
                             </Form.Item>
                             <Form.Item
                                 {...restField}
@@ -59,7 +59,7 @@ export const ThemeCreate: React.FC = () => {
                                 validateStatus={questionsSetErrors[key]?.answer ? 'error' : ''}
                                 help={questionsSetErrors[key]?.answer}
                             >
-                            <Input placeholder="Ответ" />
+                                <Input placeholder="Ответ" />
                             </Form.Item>
                             <Form.Item
                                 {...restField}
@@ -80,9 +80,9 @@ export const ThemeCreate: React.FC = () => {
                         </Space>
                     ))}
                     <Form.Item>
-                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                        Add field
-                    </Button>
+                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                            Add field
+                        </Button>
                     </Form.Item>
                 </>
             )}

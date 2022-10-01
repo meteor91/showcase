@@ -1,3 +1,5 @@
+import { IUserState } from 'apps/users/models';
+
 /**
  * Структура пагинированного списка.
  *
@@ -9,4 +11,10 @@ export interface IPaginatedData<T> {
     total: number;
     offset: number;
     results: T[];
+}
+
+export type ServerValidateErrors<T> = {
+    [K in keyof Partial<T>]: string[];
+} & {
+    nonFieldErrors?: string[];
 }

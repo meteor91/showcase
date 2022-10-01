@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { dataUtils } from 'core/utils';
 import { defaultPageSize } from 'core/consts';

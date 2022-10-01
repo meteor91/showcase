@@ -1,6 +1,4 @@
-from django.shortcuts import render
 from rest_framework import viewsets
-import time
 
 from .models import Question, Theme
 from users.models import User
@@ -17,5 +15,4 @@ class ThemeViewSet(viewsets.ModelViewSet):
     queryset =  Theme.objects.all().order_by('-created_at')
 
     def perform_create(self, serializer):
-        time.sleep(3)
         serializer.save(created_by=User.objects.all()[0])
