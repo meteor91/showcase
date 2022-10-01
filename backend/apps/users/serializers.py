@@ -22,31 +22,7 @@ class LoginUserSerializer(serializers.Serializer):
         user = authenticate(**data)
         if user and user.is_active:
             return user
-        raise serializers.ValidationError("Invalid Details.")
-
-
-#TODO: разобраться с этим, не используется
-class AuthSerializer(serializers.Serializer):
-    '''serializer for the user authentication object'''
-    username = serializers.CharField()
-    password = serializers.CharField(
-        style={'input_type': 'password'},
-        trim_whitespace=False
-    )
-
-    def validate(self, attrs):
-        username = attrs.get('username')
-        password = attrs.get('password')
-        
-        user = authenticate(
-            request=self.context.get('request'),
-            username=username,
-            password=password
+        raise serializers.ValidationError(
+            'Unable to authenticate with provided credentials',
+            code='authentication'
         )
-        
-        if not user:
-            msg = ('Unable to authenticate with provided credentials')
-            raise serializers.ValidationError(msg, code='authentication')
-
-        attrs['user'] = user
-        return 

@@ -3,21 +3,10 @@ from rest_framework.decorators import api_view
 from rest_framework import viewsets, permissions, generics
 from rest_framework.response import Response
 from knox.models import AuthToken
-from knox.views import LoginView as KnoxLoginView, LogoutView as KnoxLogoutView
+from knox.views import LogoutView as KnoxLogoutView
 
-from backend.apps.users.auth import TokenAuthenticationViaCookie
-
-from .models import User
+from .auth import TokenAuthenticationViaCookie
 from .serializers import UserSerializer, LoginUserSerializer
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all().order_by('-id')
-    serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
 
 #TODO: посмотреть в сторону dj-rest-auth

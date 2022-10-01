@@ -1,9 +1,29 @@
 import React from 'react';
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { Table } from 'antd';
+import { ColumnsType } from 'antd/lib/table';
 import {dataUtils} from 'core/utils';
 import { getTheme } from '../api';
-import { IQuestion, ITheme } from '../models';
+import { IQuestion } from '../models';
+
+const columns: ColumnsType<IQuestion> = [
+    {
+        title: 'Вопрос',
+        dataIndex : 'label',
+        key: 'label',
+    },
+    {
+        title: 'Ответ',
+        dataIndex : 'answer',
+        key: 'answer',
+    },    
+    {
+        title: 'Цена',
+        dataIndex : 'price',
+        key: 'price'
+    },
+];
 
 export const ThemeDetails: React.FC = () => {
     const params = useParams();
@@ -12,17 +32,17 @@ export const ThemeDetails: React.FC = () => {
     const {status, data} = useQuery('themeDetails', () => getTheme(params.id));
     
 
-    if ( dataUtils.isLoading(status)) {
+    if(dataUtils.isLoading(status)) {
         return <div>loading...</div>;
-    } else if (data?.data) {
-        const theme = data.data as ITheme;
+    } else if (data) {
         return (
-            <div>
-                <div>{theme.label}</div>
-                {theme.questionSet?.map((question: IQuestion) => (
-                    <div key={question.id}>{question.label} - {question.answer} - {question.price}</div>
-                ))}
-            </div>
+            <Table
+                rowKey="id"
+                loading={dataUtils.isLoading(status)}
+                columns={columns}
+                dataSource={data.questionSet}
+                pagination={false}
+            />
         )
     } else {
         return <div>error</div>

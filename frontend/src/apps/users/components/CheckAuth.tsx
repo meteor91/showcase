@@ -37,16 +37,12 @@ export const CheckAuth: React.FC<IProps> = (props) => {
         }
     });
 
-
     useEffect(() => {
         if (currentUserRef.current !== null && currentUser === null) {
             navigate('/login');
-            console.log('go login bro')
         }
         currentUserRef.current = currentUser;
-        console.log(currentUser)
-        // debugger;
-    }, [currentUser]);
+    }, [currentUser, navigate]);
 
     if (isLoading) {
         return (

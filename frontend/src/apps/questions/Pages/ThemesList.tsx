@@ -18,6 +18,7 @@ const columns: ColumnsType<ITheme> = [
 ];
 
 export const ThemesList: React.FC = () => {
+    //TODO: страница не сохраняется после возвращения обратно из деталки, проработать
     const [page, setPage] = useState(0);
     const {status, data} = useQuery(['themes', page], () => getThemesList(page));
     const navigate = useNavigate();

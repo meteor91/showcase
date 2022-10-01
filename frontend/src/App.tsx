@@ -5,13 +5,13 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import './App.css';
-import { QuestionsList } from 'apps/questions/Pages/QuestionsList';
-import { ThemesList }  from 'apps/questions/Pages/ThemesList';
-import { ThemeDetails }  from 'apps/questions/Pages/ThemeDetails';
-import { ThemeCreate }  from 'apps/questions/Pages/ThemeCreate';
-import { LoginPage } from 'apps/users/Pages/LoginPage';
+import { QuestionsList } from 'apps/questions/pages/QuestionsList';
+import { ThemesList }  from 'apps/questions/pages/ThemesList';
+import { ThemeDetails }  from 'apps/questions/pages/ThemeDetails';
+import { ThemeCreate }  from 'apps/questions/pages/ThemeCreate';
+import { LoginPage } from 'apps/users/pages/LoginPage';
 import { CheckAuth } from 'apps/users/components/CheckAuth';
-import { AuthLayout } from 'core/components/AuthLayout';
+import { LoggedUserLayout } from 'apps/users/components/LoggedUserLayout';
 import { store } from 'core/store';
 
 const { Content } = Layout;
@@ -37,7 +37,7 @@ const App: React.FC = () => {
             <QueryClientProvider client={queryClient}>
                 <Router>
                     <Routes>
-                        <Route path="/" element={<CheckAuth onSuccessRedirectPath="questions/list" onFailRedirectPath="/login"/>}>
+                        <Route path="/" element={<CheckAuth onSuccessRedirectPath="/questions/list" onFailRedirectPath="/login"/>}>
                             <Route path="/login" element={
                                 <Content
                                     className="site-layout-background"
@@ -46,7 +46,7 @@ const App: React.FC = () => {
                                     <LoginPage />
                                 </Content>
                             }/>
-                            <Route path="/" element={<AuthLayout />}>
+                            <Route path="/" element={<LoggedUserLayout />}>
                                 <Route path="/" element={<Navigate to="/questions/list" />}/>
                                 <Route path="/questions/list" element={
                                     <Content

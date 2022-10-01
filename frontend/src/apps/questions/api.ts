@@ -1,4 +1,4 @@
-import { http, post } from 'core/http';
+import { http, post, get } from 'core/http';
 import { IPaginatedData } from 'core/models';
 import { defaultPageSize } from 'core/consts';
 import { IQuestion, ITheme } from './models';
@@ -14,4 +14,4 @@ export const getThemesList = (page: number = 0) => http.get<IPaginatedData<IThem
 export const createTheme = (theme: ITheme) => post<ITheme>("/questions/themes/", theme);
 
 //TODO: разобраться с типизацией
-export const getTheme = (id: any) => http.get<ITheme>(`/questions/themes/${id}/`);
+export const getTheme = (id: any) => get<ITheme>(`/questions/themes/${id}/`);

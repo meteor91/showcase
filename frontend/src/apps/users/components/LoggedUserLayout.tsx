@@ -10,7 +10,7 @@ import { logoutUser } from 'apps/users/api';
 
 const { Header, Sider } = Layout;
 
-export const AuthLayout: React.FC = () => {
+export const LoggedUserLayout: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
     const dispatch = useDispatch();
     const mutation = useMutation(logoutUser);
@@ -32,12 +32,12 @@ export const AuthLayout: React.FC = () => {
 
             <Layout className="site-layout">
                 <Header className="site-layout-background" style={{ padding: 0 }}>
-                    <div className='header-actions'>
+                    <div className="header-actions">
                         {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                            className: 'trigger',
+                            className: "trigger",
                             onClick: () => setCollapsed(!collapsed),
                         })}
-                        <LogoutOutlined className='trigger' onClick={handleLogout}/>
+                        <LogoutOutlined className="trigger" onClick={handleLogout}/>
                     </div>
                 </Header>
                 <Outlet />
