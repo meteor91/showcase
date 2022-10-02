@@ -1,7 +1,7 @@
 import os, sys
 from datetime import timedelta
 from rest_framework.settings import api_settings
-
+from configurations import Configuration
 """
 Django settings for backend project.
 
@@ -16,147 +16,188 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
-sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 
-AUTH_USER_MODEL = 'users.User'
+class Base(Configuration):
+    # Build paths inside the project like this: BASE_DIR / 'subdir'.
+    BASE_DIR = Path(__file__).resolve().parent.parent
+    PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
+    sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 
-#TODO Исправить для production сборки
-CORS_ORIGIN_ALLOW_ALL = True
+    AUTH_USER_MODEL = 'users.User'
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
+    #TODO Исправить для production сборки
+    CORS_ORIGIN_ALLOW_ALL = True
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-a67b!t$j$ri$ae^hfcjv1g%$vy!)v65&m%=qz!+z(v1dde56ks'
+    # Quick-start development settings - unsuitable for production
+    # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+    # SECURITY WARNING: keep the secret key used in production secret!
+    SECRET_KEY = 'django-insecure-a67b!t$j$ri$ae^hfcjv1g%$vy!)v65&m%=qz!+z(v1dde56ks'
 
-ALLOWED_HOSTS = []
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = True
+
+    ALLOWED_HOSTS = []
 
 
-# Application definition
+    # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    INSTALLED_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
 
-    'rest_framework',
-    'corsheaders',
-    'knox',
-    
-    'users.apps.UsersConfig',
-    'questions.apps.QuestionsConfig',
-]
+        'rest_framework',
+        'corsheaders',
+        'knox',
+        
+        'users.apps.UsersConfig',
+        'questions.apps.QuestionsConfig',
+    ]
 
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    #TODO: настроить для продакшна
-    'middlewares.ResponseDelayMiddleware',
-]
+    MIDDLEWARE = [
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'corsheaders.middleware.CorsMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        #TODO: настроить для продакшна
+        'middlewares.ResponseDelayMiddleware',
+    ]
 
-ROOT_URLCONF = 'backend.urls'
+    ROOT_URLCONF = 'backend.urls'
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+            },
         },
-    },
-]
+    ]
 
-WSGI_APPLICATION = 'backend.wsgi.application'
+    WSGI_APPLICATION = 'backend.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+    # Database
+    # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
 
 
-# Password validation
-# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
+    # Password validation
+    # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/4.0/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_TZ = True
+    AUTH_PASSWORD_VALIDATORS = [
+        {
+            'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        },
+    ]
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
+    # Internationalization
+    # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-STATIC_URL = 'static/'
+    LANGUAGE_CODE = 'en-us'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
+    TIME_ZONE = 'UTC'
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+    USE_I18N = True
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_PAGINATION_CLASS': 'core.paginations.LimitOffsetPaginationExtended',
-    'DEFAULT_AUTHENTICATION_CLASSES': ('users.auth.TokenAuthenticationViaCookie',),
-}
+    USE_TZ = True
 
-REST_KNOX = {
-    'SECURE_HASH_ALGORITHM': 'cryptography.hazmat.primitives.hashes.SHA512',
-    'AUTH_TOKEN_CHARACTER_LENGTH': 64,
-    'TOKEN_TTL': timedelta(hours=10),
-    'USER_SERIALIZER': 'knox.serializers.UserSerializer',
-    'TOKEN_LIMIT_PER_USER': None,
-    'AUTO_REFRESH': False,
-    'EXPIRY_DATETIME_FORMAT': api_settings.DATETIME_FORMAT,
-}
+
+    # Static files (CSS, JavaScript, Images)
+    # https://docs.djangoproject.com/en/4.0/howto/static-files/
+
+    STATIC_URL = 'static/'
+
+    # Default primary key field type
+    # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
+
+    DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+    REST_FRAMEWORK = {
+        'DEFAULT_PERMISSION_CLASSES': (
+            'rest_framework.permissions.IsAuthenticated',
+        ),
+        'DEFAULT_PAGINATION_CLASS': 'core.paginations.LimitOffsetPaginationExtended',
+        'DEFAULT_AUTHENTICATION_CLASSES': ('users.auth.TokenAuthenticationViaCookie',),
+    }
+
+    REST_KNOX = {
+        'SECURE_HASH_ALGORITHM': 'cryptography.hazmat.primitives.hashes.SHA512',
+        'AUTH_TOKEN_CHARACTER_LENGTH': 64,
+        'TOKEN_TTL': timedelta(hours=10),
+        'USER_SERIALIZER': 'knox.serializers.UserSerializer',
+        'TOKEN_LIMIT_PER_USER': None,
+        'AUTO_REFRESH': False,
+        'EXPIRY_DATETIME_FORMAT': api_settings.DATETIME_FORMAT,
+    }
+
+
+
+class Dev(Base):
+
+    @property
+    def MEDIA_ROOT(self):
+        return os.path.join(self.PROJECT_ROOT, 'media')
+
+    @property
+    def STATIC_ROOT(self):
+        return os.path.join(self.PROJECT_ROOT, 'static')
+
+
+class Prod(Base):
+    DEBUG = False
+    # ALLOWED_HOSTS = ['http://kkgenki.space/', 'kkgenki.space', 'www.kkgenki.space']
+    # исправить позже
+    ALLOWED_HOSTS = ['*']
+    CORS_ORIGIN_ALLOW_ALL = False
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'showcase',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': 'localhost',
+            'PORT': 5432,
+        },
+    }
+
+    @property
+    def MEDIA_ROOT(self):
+        return '/root/projects/showcase/backend/media'
+
+    @property
+    def STATIC_ROOT(self):
+        return '/root/projects/showcase/backend/static'
