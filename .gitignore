@@ -112,6 +112,7 @@ $RECYCLE.BIN/
 sftp-config.json
 
 frontend/node_modules
+frontend/build
 backend/media
 backend/locale/**/*.mo
 backend/venv

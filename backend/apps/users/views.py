@@ -1,6 +1,6 @@
 from django.contrib.auth import login
 from rest_framework.decorators import api_view
-from rest_framework import viewsets, permissions, generics
+from rest_framework import permissions, generics
 from rest_framework.response import Response
 from knox.models import AuthToken
 from knox.views import LogoutView as KnoxLogoutView
