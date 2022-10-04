@@ -3,7 +3,7 @@ import { notification } from 'antd';
 import { adaptFromApi, adaptToApi } from './utils';
 
 export const http = axios.create({
-    baseURL: "http://127.0.0.1:3000/api",
+    baseURL: "/api",
     headers: {
         "Content-type": "application/json"
     },
