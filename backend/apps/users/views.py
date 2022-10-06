@@ -13,6 +13,7 @@ from .serializers import UserSerializer, LoginUserSerializer
 class LoginView(generics.GenericAPIView):
     serializer_class = LoginUserSerializer
     permission_classes = (permissions.AllowAny,)
+    authentication_classes = []
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -30,7 +31,6 @@ class LoginView(generics.GenericAPIView):
         response.set_cookie(
             'auth_token',
             token,
-            # domain='localhost:8000',
             httponly=True,
             samesite='strict'
         )

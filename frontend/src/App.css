@@ -38,3 +38,7 @@
     display: flex;
     justify-content: space-between;
 }
+
+.form-list .ant-form-item {
+    margin-bottom: 12px;
+}

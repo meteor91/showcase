@@ -7,7 +7,7 @@ import { TThemeFieldErrors, TQuestionSet } from "./models";
  *
  * Попробовать научить DRF возвращать 2 разных поля.
  */
-export const getQuestionSetErrors = (errors: TThemeFieldErrors | null): {
+export const getQuestionSetErrors = (errors?: TThemeFieldErrors | null): {
     questionsSetErrors: TQuestionSet;
     questionsErrors: string[];
 }  => {

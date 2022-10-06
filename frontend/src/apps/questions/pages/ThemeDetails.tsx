@@ -1,11 +1,13 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { Table } from 'antd';
+import { Button, Table, Col, Row, Typography } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import {dataUtils} from 'core/utils';
 import { getTheme } from '../api';
 import { IQuestion } from '../models';
+import { Spinner } from 'core/components/Spinner';
+import { SpaceVertical } from 'core/components/SpaceVertical';
 
 const columns: ColumnsType<IQuestion> = [
     {
@@ -26,23 +28,42 @@ const columns: ColumnsType<IQuestion> = [
 ];
 
 export const ThemeDetails: React.FC = () => {
-    const params = useParams();
-    
-    //TODO: разобраться со всеми дженериками useQuery/mutation
-    const {status, data} = useQuery('themeDetails', () => getTheme(params.id));
-    
+    const params = useParams();    
+
+    const {status, data} = useQuery(['themeDetails', params.id],  () => getTheme(params.id));
+    const navigate = useNavigate();
+
+    const handleEdit = () => {
+        navigate(`/themes/edit/${params.id}`)
+    }
 
     if(dataUtils.isLoading(status)) {
-        return <div>loading...</div>;
+        return <Spinner />;
     } else if (data) {
         return (
-            <Table
-                rowKey="id"
-                loading={dataUtils.isLoading(status)}
-                columns={columns}
-                dataSource={data.questionSet}
-                pagination={false}
-            />
+            <SpaceVertical>
+                <Row gutter={[16, 16]}>
+                    <Col span={24}><Typography.Text strong>Название: </Typography.Text>{data.label}</Col>
+                </Row>
+
+                <Row gutter={[16, 16]}>
+                    <Col span={24}>
+                        <Table
+                            rowKey="id"
+                            loading={dataUtils.isLoading(status)}
+                            columns={columns}
+                            dataSource={data.questionSet}
+                            pagination={false}
+                        />
+                    </Col>
+                </Row>
+
+                <Row gutter={[16, 16]}>
+                    <Col span={24}>
+                        <Button onClick={handleEdit}>Редактировать</Button>
+                    </Col>
+                </Row>
+            </SpaceVertical>
         )
     } else {
         return <div>error</div>

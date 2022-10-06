@@ -2,9 +2,11 @@ import { Layout } from 'antd';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import './App.css';
+import { store } from 'core/store';
+import { queryClient } from 'core/queryClient';
 import { QuestionsList } from 'apps/questions/pages/QuestionsList';
 import { ThemesList }  from 'apps/questions/pages/ThemesList';
 import { ThemeDetails }  from 'apps/questions/pages/ThemeDetails';
@@ -12,18 +14,9 @@ import { ThemeCreate }  from 'apps/questions/pages/ThemeCreate';
 import { LoginPage } from 'apps/users/pages/LoginPage';
 import { CheckAuth } from 'apps/users/components/CheckAuth';
 import { LoggedUserLayout } from 'apps/users/components/LoggedUserLayout';
-import { store } from 'core/store';
+import { ThemeEdit } from 'apps/questions/pages/ThemeEdit';
 
 const { Content } = Layout;
-
-const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            refetchOnWindowFocus: false,
-            retry: false,
-        },
-    },
-});
 
 const contentStyle = {
     margin: '24px 16px',
@@ -70,6 +63,14 @@ const App: React.FC = () => {
                                         style={contentStyle}
                                     >
                                         <ThemeCreate/>
+                                    </Content>
+                                }/>
+                                <Route path="/themes/edit/:id" element={
+                                    <Content
+                                        className="site-layout-background"
+                                        style={contentStyle}
+                                    >
+                                        <ThemeEdit/>
                                     </Content>
                                 }/>
                                 <Route path={`/themes/:id`} element={

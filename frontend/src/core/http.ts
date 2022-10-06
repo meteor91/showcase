@@ -63,6 +63,20 @@ export const post = <T, R = T>(url: string, data?: T): Promise<R> => {
     );
 };
 
+export const put = <T, R = T>(url: string, data?: T): Promise<R> => {
+    return http.put(url, data).then(
+        (result: AxiosResponse<R>) => result.data,
+        (result: AxiosError<R>) => {
+            if (result.response) {
+                return Promise.reject(result.response.data);
+            } else {
+                notification.open({message: serverNotRespondingErrorNotification});
+                return Promise.reject([]);
+            }
+        }
+    );
+};
+
 export const get = <R>(url: string): Promise<R> => {
     return http.get(url).then(
         (result: AxiosResponse<R>) => result.data,

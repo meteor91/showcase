@@ -13,3 +13,6 @@ class User(AbstractUser):
     )
 
     role = models.CharField('Роль', choices=ROLES_CHOICES, max_length=16)
+
+    def __str__(self):
+        return self.username

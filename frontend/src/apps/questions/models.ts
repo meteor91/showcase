@@ -9,7 +9,10 @@ export interface IQuestion {
 export interface ITheme {
     id?: string;
     label: string;
-    questionSet?: IQuestion[]
+    questionSet?: IQuestion[];
+    createdBy: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export type TQuestionSet = {

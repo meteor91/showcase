@@ -23,12 +23,17 @@ class QuestionAdmin(admin.ModelAdmin):
         obj.created_by = request.user
         return super().save_model(request, obj, form, change)
 
+class QuestionInline(admin.TabularInline):
+    model = Question
+
+
 @admin.register(Theme)
 class ThemeAdmin(admin.ModelAdmin):
     list_display = ('label', 'created_by',)
     exclude = ('created_by',)
+    
+    inlines = (QuestionInline,)
 
     def save_model(self, request, obj, form, change):
         obj.created_by = request.user
-        print('hohoho')
         return super().save_model(request, obj, form, change)

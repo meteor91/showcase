@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { getCurrentUser } from 'apps/users/api';
 import { Layout, Spin } from 'antd';
 import { ILoggedUser } from 'apps/users/models';
@@ -22,6 +22,7 @@ interface IProps {
 
 export const CheckAuth: React.FC<IProps> = (props) => {
     const navigate = useNavigate();
+    const location = useLocation();
     const dispatch = useDispatch();
     const currentUser = useSelector(selectCurrentUser);
     const currentUserRef = useRef(currentUser);
@@ -29,7 +30,8 @@ export const CheckAuth: React.FC<IProps> = (props) => {
     const {isLoading} = useQuery('currentUser', getCurrentUser, {      
         onSuccess: (user: ILoggedUser) => {
             dispatch(setCurrentUser(user));
-            navigate(props.onSuccessRedirectPath);
+            const path = location.pathname !== '/login' ? location.pathname : props.onSuccessRedirectPath;
+            navigate(path);
         },
         onError: () => {
             dispatch(clearCurrentUser());
