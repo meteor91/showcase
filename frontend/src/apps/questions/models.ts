@@ -17,7 +17,7 @@ export interface ITheme {
 
 export type TQuestionSet = {
     [K in keyof Partial<Omit<IQuestion, 'id' | 'themeLabel'>>]: string[];
-}[];
+};
 
 /** Для сложных форм на данный момент проще вручную создавать модель ошибок. */
 export type TThemeFieldErrors = {

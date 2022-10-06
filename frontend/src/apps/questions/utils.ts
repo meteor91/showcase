@@ -8,12 +8,12 @@ import { TThemeFieldErrors, TQuestionSet } from "./models";
  * Попробовать научить DRF возвращать 2 разных поля.
  */
 export const getQuestionSetErrors = (errors?: TThemeFieldErrors | null): {
-    questionsSetErrors: TQuestionSet;
+    questionsSetErrors: TQuestionSet[];
     questionsErrors: string[];
 }  => {
     const isErrorInSet = typeof errors?.questionSet?.[0] !== 'string';
     return {
-        questionsSetErrors: isErrorInSet && errors?.questionSet ? errors.questionSet as TQuestionSet : [],
+        questionsSetErrors: isErrorInSet && errors?.questionSet ? errors.questionSet as TQuestionSet[] : [],
         questionsErrors: !isErrorInSet && errors?.questionSet ? errors.questionSet as string[] : [],
     }
 }
