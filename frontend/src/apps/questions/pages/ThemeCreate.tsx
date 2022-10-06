@@ -5,11 +5,7 @@ import { createTheme } from '../api';
 import { ITheme, TThemeFieldErrors } from '../models';
 import { ThemeForm } from '../components/ThemeForm';
 
-/**
- * Страница с созданием тематики с вопросами.
- * Необходимо переделать логику отображения серверных ошибок.
- * Необходимо добавить блокировку полей ввода при выполнении запроса сохранения формы.
- */
+/** Страница с созданием тематики с вопросами */
 export const ThemeCreate: React.FC = () => {
     const navigate = useNavigate();
 
@@ -20,8 +16,8 @@ export const ThemeCreate: React.FC = () => {
     return (
         <ThemeForm 
             onSubmit={mutation.mutate}
-            serverError={mutation.error}
             isLoading={mutation.isLoading}
+            serverValidationErrors={mutation.error}
         />
     )
 }

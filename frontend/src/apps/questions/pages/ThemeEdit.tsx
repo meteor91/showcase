@@ -31,8 +31,8 @@ export const ThemeEdit: React.FC = () => {
         return (
             <ThemeForm 
                 onSubmit={mutation.mutate}
-                serverError={mutation.error}
                 isLoading={mutation.isLoading}
+                serverValidationErrors={mutation.error}
                 prefill={data}
             />
         );
