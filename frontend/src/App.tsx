@@ -22,7 +22,7 @@ const App: React.FC = () => {
                     <Routes>
                         <Route path="/" element={<CheckAuth onSuccessRedirectPath="/themes" onFailRedirectPath="/login"/>}>
                             <Route path="/login" element={
-                                <ContentLayout content={<LoginPage />} />
+                                <LoginPage />
                             } />
                             <Route path="/" element={<LoggedUserLayout />}>
                                 <Route path="/" element={<Navigate to="/themes" />}/>
