@@ -96,7 +96,7 @@ export const ThemeForm: React.FC<IProps> = (props) => {
             </Form.List>
             <Form.Item>
                 <Button type="primary" htmlType="submit" disabled={isLoading}>
-                    Submit
+                    Отправить
                 </Button>
             </Form.Item>
             <Drawer open={drawlerOpened} onClose={() => setDrawlerOpened(false)}>

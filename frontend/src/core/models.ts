@@ -18,3 +18,12 @@ export type ServerValidateErrors<T> = {
 } & {
     nonFieldErrors?: string[];
 }
+
+export interface IPath {
+    path: string;
+    name: string;
+}
+
+export type TRoutePaths<T extends string> = {
+    [key in T]: IPath;
+}

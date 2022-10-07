@@ -1,12 +1,14 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, generatePath } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 import { editTheme, getTheme } from '../api';
 import { dataUtils } from 'core/utils';
 import { Spinner } from 'core/components/Spinner';
+import { queryClient } from 'core/queryClient';
 import { ITheme, TThemeFieldErrors } from '../models';
 import { ThemeForm } from '../components/ThemeForm';
-import { queryClient } from 'core/queryClient';
+import { routeMap } from '../routeMap';
+
 
 export const ThemeEdit: React.FC = () => {
     const params = useParams();
@@ -20,7 +22,7 @@ export const ThemeEdit: React.FC = () => {
         {
             onSuccess: () => {
                 queryClient.removeQueries(['themeDetails', params.id]);
-                navigate(`/themes/${params.id}`);
+                navigate(generatePath(routeMap.details.path, {id: params.id}));
             },
         }
     );

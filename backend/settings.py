@@ -165,9 +165,7 @@ REST_KNOX = {
 
 if os.environ.get('DJANGO_CONFIGURATION', '') != 'Dev':
     DEBUG = False
-    # ALLOWED_HOSTS = ['http://kkgenki.space/', 'kkgenki.space', 'www.kkgenki.space']
-    # исправить позже
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ['http://kkgenki.space/', 'kkgenki.space', 'www.kkgenki.space']
     CORS_ORIGIN_ALLOW_ALL = False
 
     DATABASES = {

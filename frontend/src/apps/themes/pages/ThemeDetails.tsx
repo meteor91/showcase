@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, generatePath } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { Button, Table, Col, Row, Typography } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
@@ -8,6 +8,7 @@ import { getTheme } from '../api';
 import { IQuestion } from '../models';
 import { Spinner } from 'core/components/Spinner';
 import { SpaceVertical } from 'core/components/SpaceVertical';
+import { routeMap } from '../routeMap';
 
 const columns: ColumnsType<IQuestion> = [
     {
@@ -34,7 +35,7 @@ export const ThemeDetails: React.FC = () => {
     const navigate = useNavigate();
 
     const handleEdit = () => {
-        navigate(`/themes/edit/${params.id}`)
+        navigate(generatePath(routeMap.edit.path, {id: params.id}));
     }
 
     if(dataUtils.isLoading(status)) {

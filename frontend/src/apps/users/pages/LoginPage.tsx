@@ -7,6 +7,8 @@ import { ServerValidateErrors } from 'core/models';
 import { loginUser } from '../api';
 import { ILoginForm, IUserState } from '../models';
 import { setCurrentUser } from '../slices';
+import { routeMap } from 'core/routeMap';
+
 
 const styles = {
     login: {height: '100vh'},
@@ -21,7 +23,7 @@ export const LoginPage: React.FC = () => {
         mutation.mutate(values, {
             onSuccess: (result: IUserState) => {
                 dispatch(setCurrentUser(result));
-                navigate('/themes/list');
+                navigate(routeMap.themes.list.path);
             },
             onError: (error) => {console.log(error);}
         });

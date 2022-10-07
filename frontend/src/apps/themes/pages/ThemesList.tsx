@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Button, Table, Col, Row } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, generatePath } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import * as moment from 'moment';
 import { dataUtils } from 'core/utils';
 import { defaultPageSize } from 'core/consts';
 import { getThemesList } from '../api';
 import { ITheme } from '../models';
+import { routeMap } from '../routeMap';
 import { SpaceVertical } from 'core/components/SpaceVertical';
 
 const columns: ColumnsType<ITheme> = [
@@ -15,7 +16,7 @@ const columns: ColumnsType<ITheme> = [
         title: 'Название',
         dataIndex : 'label',
         key: 'label',
-        render: (_, record) => <Link to={`/themes/${record.id}`}>{record.label}</Link>
+        render:  (_, record) => <Link to={generatePath(routeMap.details.path, {id: record.id})}>{record.label}</Link>
     },
     {
         title: 'Автор',
@@ -48,13 +49,13 @@ export const ThemesList: React.FC = () => {
         },
         total:  data?.data.total,
         pageSize: defaultPageSize,
-    }
+    };
 
     return (
         <SpaceVertical>
             <Row>
                 <Col span={24}>
-                    <Button onClick={() => navigate('/themes/create')}>Создать</Button>
+                    <Button onClick={() => navigate(generatePath(routeMap.create.path))}>Создать</Button>
                 </Col>
             </Row>
             <Row>
