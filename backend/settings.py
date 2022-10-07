@@ -35,7 +35,7 @@ SECRET_KEY = 'django-insecure-a67b!t$j$ri$ae^hfcjv1g%$vy!)v65&m%=qz!+z(v1dde56ks
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -165,7 +165,7 @@ REST_KNOX = {
 
 if os.environ.get('DJANGO_CONFIGURATION', '') != 'Dev':
     DEBUG = False
-    ALLOWED_HOSTS = ['http://kkgenki.space/', 'kkgenki.space', 'www.kkgenki.space']
+    ALLOWED_HOSTS = ['http://kkgenkai.space/', 'kkgenkai.space', 'www.kkgenkai.space']
     CORS_ORIGIN_ALLOW_ALL = False
 
     DATABASES = {
