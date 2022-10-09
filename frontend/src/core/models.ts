@@ -1,4 +1,4 @@
-import { IUserState } from 'apps/users/models';
+import { QueryStatus } from 'react-query';
 
 /**
  * Структура пагинированного списка.
@@ -26,4 +26,13 @@ export interface IPath {
 
 export type TRoutePaths<T extends string> = {
     [key in T]: IPath;
+}
+
+export type TLoadingStatus = QueryStatus;
+
+export enum ELoadingStatus {
+    Idle = 'idle',
+    Loading = 'loading',
+    Error = 'error',
+    Success = 'success'
 }

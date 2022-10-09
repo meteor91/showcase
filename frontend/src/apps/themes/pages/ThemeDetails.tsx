@@ -1,14 +1,14 @@
 import React from 'react';
 import { useParams, useNavigate, generatePath } from 'react-router-dom';
-import { useQuery } from 'react-query';
 import { Button, Table, Col, Row, Typography } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import {dataUtils} from 'core/utils';
-import { getTheme } from '../api';
 import { IQuestion } from '../models';
 import { Spinner } from 'core/components/Spinner';
 import { SpaceVertical } from 'core/components/SpaceVertical';
 import { routeMap } from '../routeMap';
+import { useDetailsQuery } from '../queries';
+import { ErrorResult } from 'core/components/ErrorResult';
 
 const columns: ColumnsType<IQuestion> = [
     {
@@ -30,8 +30,7 @@ const columns: ColumnsType<IQuestion> = [
 
 export const ThemeDetails: React.FC = () => {
     const params = useParams();    
-
-    const {status, data} = useQuery(['themeDetails', params.id],  () => getTheme(params.id));
+    const {status, data} = useDetailsQuery(params.id!)
     const navigate = useNavigate();
 
     const handleEdit = () => {
@@ -67,6 +66,6 @@ export const ThemeDetails: React.FC = () => {
             </SpaceVertical>
         )
     } else {
-        return <div>error</div>
+        return <ErrorResult />
     }
 }

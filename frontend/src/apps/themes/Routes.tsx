@@ -24,7 +24,7 @@ export const themesRoutes = () => {
             }/>
             <Route path=":id/edit" element={
                 <ContentLayout
-                    breadcrumbs={<Breadcrumbs<ThemesPaths> routeMap={routeMap} path={[ThemesPaths.list, ThemesPaths.edit]}/>}
+                    breadcrumbs={<Breadcrumbs<ThemesPaths> routeMap={routeMap} path={[ThemesPaths.list,  ThemesPaths.details, ThemesPaths.edit]}/>}
                     content={<ThemeEdit/>}
                 />
             }/>

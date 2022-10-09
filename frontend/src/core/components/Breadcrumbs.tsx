@@ -1,28 +1,42 @@
 import React from 'react';
-import { Breadcrumb } from 'antd';
+import { useSelector } from 'react-redux';
+import { Breadcrumb, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import { TRoutePaths } from 'core/models';
 import { Link } from 'react-router-dom';
+import { TAppState } from 'core/store';
 
 interface IProps<T extends string> {
     path: T[];
     routeMap: TRoutePaths<T>;
 }
 
-/**
- * Проработать возможность отображения деталей сущностей.
- */
+const antIcon = <LoadingOutlined style={{ fontSize: 14 }} spin />;
+
 export const Breadcrumbs = <T extends string>(props: IProps<T>): React.ReactElement => {
-    const { path, routeMap } = props;
+    const {path, routeMap} = props;
+    const pageName = useSelector((state: TAppState) => state.pageName);
+    
+    const items = path.map((item: T) => {
+        let label: React.ReactNode = <Link to={routeMap[item].path}>{routeMap[item].name}</Link>;
+        if (item === 'details') {
+            if (pageName.status === 'success') {
+                label = pageName.name;
+            } else if (pageName.status === 'loading') {
+                label = <Spin indicator={antIcon} />;
+            }
+        }
+
+        return (
+            <Breadcrumb.Item key={routeMap[item].path}>
+                {label}
+            </Breadcrumb.Item>
+        )
+    });
 
     return (
         <Breadcrumb>
-            {
-                path.map((item: T) => (
-                    <Breadcrumb.Item key={routeMap[item].path}>
-                        <Link to={routeMap[item].path}>{routeMap[item].name}</Link>
-                    </Breadcrumb.Item>
-                ))
-            }
+            {items}
         </Breadcrumb>
     )
 };

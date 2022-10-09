@@ -1,20 +1,21 @@
 import React from 'react';
 import { useNavigate, useParams, generatePath } from 'react-router-dom';
-import { useMutation, useQuery } from 'react-query';
-import { editTheme, getTheme } from '../api';
+import { useMutation } from 'react-query';
+import { editTheme } from '../api';
 import { dataUtils } from 'core/utils';
 import { Spinner } from 'core/components/Spinner';
 import { queryClient } from 'core/queryClient';
 import { ITheme, TThemeFieldErrors } from '../models';
 import { ThemeForm } from '../components/ThemeForm';
 import { routeMap } from '../routeMap';
+import { useDetailsQuery } from '../queries';
 
 
 export const ThemeEdit: React.FC = () => {
     const params = useParams();
     const navigate = useNavigate();
 
-    const {status, data} = useQuery(['themeEdit', params.id], () => getTheme(params.id));
+    const {status, data} = useDetailsQuery(params.id!);
 
     const mutation = useMutation<ITheme, TThemeFieldErrors, ITheme>(
         'createTheme', 

@@ -1,4 +1,3 @@
-import { Layout } from 'antd';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';

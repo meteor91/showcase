@@ -1,21 +1,38 @@
 import {camelCase, forEach, isArray, isObject, map, snakeCase} from 'lodash';
+import {ELoadingStatus, TLoadingStatus} from './models';
 
-export const isLoading = (status: string) => {
-    return status === 'loading';
+/**
+ * Check is loading status.
+ * 
+ * @param status Current status.
+ */
+export const isLoading = (status: TLoadingStatus) => {
+    return status === ELoadingStatus.Loading;
 }
 
-export const isError = (status: string) => {
-    return status === 'error';
+/**
+ * Check is error status.
+ * 
+ * @param status Current status.
+ */
+export const isError = (status: TLoadingStatus) => {
+    return status === ELoadingStatus.Error;
 }
 
 export const dataUtils = {
-    isLoading: isLoading,
-    isError: isError,
+    isLoading,
+    isError,
 }
 
+/**
+ * Utility function to adapt python-backend case to ts case and vice versa.
+ *
+ * @param sourceObject Object to adapt.
+ * @param adaptFunction Adapt strategy function.
+ */
 function adapt(sourceObject: any, adaptFunction: Function): any {
     if (sourceObject && sourceObject.constructor === File) {
-        // Файлы
+        // files
         return sourceObject;
     } else if (isArray(sourceObject)) {
         return map(sourceObject, value => adapt(value, adaptFunction));
@@ -36,6 +53,17 @@ function adapt(sourceObject: any, adaptFunction: Function): any {
     }
 }
 
+/**
+ * Adapt python-backend to ts, to work in front.
+ * 
+ * @param sourceObject Object to adapt.
+ */
 export const adaptFromApi = (sourceObject: any) => adapt(sourceObject, camelCase);
 
+
+/**
+ * Adapt ts to python-backend to work in server.
+ * 
+ * @param sourceObject Object to adapt.
+ */
 export const adaptToApi = (sourceObject: any) => adapt(sourceObject, snakeCase);
