@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams, useNavigate, generatePath } from 'react-router-dom';
 import { Button, Table, Col, Row, Typography } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
-import {dataUtils} from 'core/utils';
+import { dataUtils } from 'core/utils';
 import { IQuestion } from '../models';
 import { Spinner } from 'core/components/Spinner';
 import { SpaceVertical } from 'core/components/SpaceVertical';
@@ -39,7 +39,7 @@ export const ThemeDetails: React.FC = () => {
 
     if(dataUtils.isLoading(status)) {
         return <Spinner />;
-    } else if (data) {
+    } else if (dataUtils.isReady(status) && data) {
         return (
             <SpaceVertical>
                 <Row gutter={[16, 16]}>
@@ -58,7 +58,7 @@ export const ThemeDetails: React.FC = () => {
                     </Col>
                 </Row>
 
-                <Row gutter={[16, 16]}>
+                <Row>
                     <Col span={24}>
                         <Button onClick={handleEdit}>Редактировать</Button>
                     </Col>

@@ -163,7 +163,7 @@ REST_KNOX = {
 }
 
 
-if os.environ.get('DJANGO_CONFIGURATION', '') != 'Dev':
+if os.environ.get('DJANGO_CONFIGURATION', '') == 'Prod':
     DEBUG = False
     ALLOWED_HOSTS = ['http://kkgenkai.space/', 'kkgenkai.space', 'www.kkgenkai.space']
     CORS_ORIGIN_ALLOW_ALL = False
@@ -178,3 +178,11 @@ if os.environ.get('DJANGO_CONFIGURATION', '') != 'Dev':
             'PORT': 5432,
         },
     }
+
+if os.environ.get('DJANGO_CONFIGURATION', '') == 'Cypress':
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'cypress.sqlite3',
+    }
+}

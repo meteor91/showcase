@@ -122,3 +122,7 @@ backend/staticfiles/js/vendor.bundle.js
 backend/staticfiles/js/index.html
 
 db.sqlite3
+cypress.sqlite3
+
+frontend/cypress/e2e/1-getting-started
+frontend/cypress/e2e/2-advanced-examples
