@@ -1,9 +1,7 @@
 describe('login to the app', () => {
 
     it('display login form', () => {
-        cy.task('db:init');
-        cy.task('db:seed');
-        cy.visit(`${Cypress.env('localhost')}/login`);
+        cy.visit('/login');
 
         cy.intercept('GET', '/api/users/current-user/').as('checkUser');
         cy.wait('@checkUser').its('response.statusCode').should('eq', 401)
@@ -18,7 +16,6 @@ describe('login to the app', () => {
     });
 
     it('check validations fails', () => {
-        // cy.get('[data-testid=submit]').should('have.text', 'Отправить').click()
         cy.get('[data-testid=username-item]').find('input[type=text]').type('1').clear();
         cy.get('[data-testid=username-item]').find('.ant-form-item-explain-error')
             .should('have.text', 'Введите имя пользователя');
@@ -56,7 +53,6 @@ describe('login to the app', () => {
 
         cy.wait('@loginSuccess').its('response.statusCode').should('eq', 200);
 
-        cy.url().should('eq', `${Cypress.env('localhost')}/themes`);
-
-    })
+        cy.url().should('eq', `${Cypress.config('baseUrl')}/themes`);
+    });
 });
