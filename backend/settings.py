@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
-    'questions.apps.QuestionsConfig',
+    'themes.apps.ThemesConfig',
 ]
 
 MIDDLEWARE = [
