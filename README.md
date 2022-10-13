@@ -1,5 +1,5 @@
 > http://kkgenkai.space/
-> user - admin
-> password - admin
+> user - billy
+> password - pass
 
 proof of concepts
