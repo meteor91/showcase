@@ -90,3 +90,23 @@ export const get = <R>(url: string): Promise<R> => {
         }
     )
 };
+
+/**
+ * DELETE-запрос, возвращает ответ с бекенда.
+ * (Убрал метаданные Axios, они избыточны для работы на уровне бизнес логики)
+ * 
+ * @param url URL реста.
+ */
+ export const del = <T, R = T>(url: string): Promise<R> => {
+    return http.delete(url).then(
+        (result: AxiosResponse<R>) => result.data,
+        (result: AxiosError<R>) => {
+            if (result.response) {
+                return Promise.reject(result.response.data);
+            } else {
+                notification.open({message: serverNotRespondingErrorNotification});
+                return Promise.reject([]);
+            }
+        }
+    );
+};

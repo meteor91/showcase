@@ -4,10 +4,10 @@ import {ELoadingStatus, TLoadingStatus} from './models';
 /**
  * Check is loading status.
  * 
- * @param status Current status.
+ * @param status Current status. ...args: any[]
  */
-export const isLoading = (status: TLoadingStatus) => {
-    return status === ELoadingStatus.Loading;
+export const isLoading = (...args: TLoadingStatus[]) => {
+    return args.some(status => status === ELoadingStatus.Loading);
 }
 
 /**

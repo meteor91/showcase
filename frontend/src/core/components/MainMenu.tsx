@@ -1,36 +1,39 @@
 import React from 'react';
-import { BulbOutlined, QuestionOutlined } from '@ant-design/icons';
+import { BulbOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { routeMap } from '../routeMap';
 
-const menuItems = [{
-    key: '/questions/list',
-    label: (
-        <Link to="/questions/list">
-            <QuestionOutlined />
-            <span>Вопросы</span>
-        </Link>
-    ),
-}, {
-    key: routeMap.themes.list.path,
-    label: (
-        <Link to={routeMap.themes.list.path}>
-            <BulbOutlined />
-            <span>Тематика</span>
-        </Link>            
-    ),
-}];
+const menuRoutes = [
+    {
+        ...routeMap.themes.list,
+        icon: <BulbOutlined />
+    }
+]
+
+const menuItems = menuRoutes.map((menuRoute) => {
+    return {
+        key: menuRoute.path,
+        label: (
+            <Link to={menuRoute.path}>
+                {menuRoute.icon}
+                <span>{menuRoute.name}</span>
+            </Link>
+        ),
+    }
+});
 
 export const MainMenu: React.FC = () => {
     const location = useLocation();
+    const defaultSelectedKey = menuRoutes.find((menuRoute => location.pathname.indexOf(menuRoute.path) === 0))?.path;
+    const defaultSelectedKeys = defaultSelectedKey ? [defaultSelectedKey]: undefined;
 
     return (
         <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={[location.pathname]}
-            style={{height:"100vh"}}
+            defaultSelectedKeys={defaultSelectedKeys}
+            style={{height: "100vh"}}
             items={menuItems}
         />  
     )

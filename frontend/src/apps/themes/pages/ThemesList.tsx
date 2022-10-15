@@ -1,55 +1,47 @@
-import React, { useState } from 'react';
-import { Button, Table, Col, Row } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
+import React, { useState, useEffect } from 'react';
+import { Button, Table, Col, Row, Modal } from 'antd';
+import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link, useNavigate, generatePath } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import * as moment from 'moment';
 import { dataUtils } from 'core/utils';
 import { defaultPageSize } from 'core/consts';
-import { getThemesList } from '../api';
+import { SpaceVertical } from 'core/components/SpaceVertical';
+import { deleteTheme, getThemesList } from '../api';
 import { ITheme } from '../models';
 import { routeMap } from '../routeMap';
-import { SpaceVertical } from 'core/components/SpaceVertical';
+import { paginationStorage } from 'core/paginationStorage';
 
-const columns: ColumnsType<ITheme> = [
-    {
-        title: 'Название',
-        dataIndex : 'label',
-        key: 'label',
-        render:  (_, record) => <Link to={generatePath(routeMap.details.path, {id: record.id})}>{record.label}</Link>
-    },
-    {
-        title: 'Автор',
-        dataIndex : 'createdBy',
-        key: 'createdBy',
-    },
-    {
-        title: 'Создано',
-        dataIndex : 'createdAt',
-        key: 'createdAt',
-        render: (_, record) => moment.utc(record.createdAt).format('ll')
-    },
-    {
-        title: 'Обновлено',
-        dataIndex : 'updatedAt',
-        key: 'updatedAt',
-        render: (_, record) => moment.utc(record.updatedAt).format('ll')
-    }
-];
+const { confirm } = Modal;
 
 export const ThemesList: React.FC = () => {
-    //TODO: страница не сохраняется после возвращения обратно из деталки, проработать
-    const [page, setPage] = useState(0);
-    const {status, data} = useQuery(['themes', page], () => getThemesList(page));
+    const [page, setPage] = useState(paginationStorage.getItem('themesList'));
     const navigate = useNavigate();
 
+    const {status, data, refetch, isRefetching} = useQuery('themesList', () => getThemesList(page), {keepPreviousData: true});
+    const {status: delStatus, mutate} = useMutation<ITheme, unknown, ITheme>(
+        'deleteTheme', 
+        (theme: ITheme) => deleteTheme(theme), 
+        {
+            onSuccess: () => {
+                refetch();
+            },
+        }
+    );
+
+    useEffect(() => {
+        refetch();
+        paginationStorage.setItem('themesList', page);
+    }, [page, refetch]);
+
     const pagination = {
-        onChange: (newPage: number,  _newSize: number) => {
+        onChange: (newPage: number, _newSize: number) => {
             newPage && setPage(newPage);
         },
         total:  data?.data.total,
         pageSize: defaultPageSize,
-    };
+        defaultCurrent: page,
+    };    
 
     return (
         <SpaceVertical>
@@ -62,13 +54,60 @@ export const ThemesList: React.FC = () => {
                 <Col span={24}>
                     <Table
                         rowKey="id"
-                        loading={dataUtils.isLoading(status)}
-                        columns={columns}
+                        loading={dataUtils.isLoading(status, delStatus) || isRefetching}
                         dataSource={data?.data.results}
                         pagination={pagination}
-                    />
+                        
+                    >
+                        <Table.Column 
+                            key="label" 
+                            title="Название" 
+                            dataIndex="label"
+                            render={renderThemeLabel}
+                        />
+                        <Table.Column
+                            key="createdBy"
+                            title="Автор"
+                            dataIndex="createdBy"
+                        />
+                        <Table.Column
+                            key="createdAt"
+                            title="Создано"
+                            dataIndex="createdAt"
+                            render={renderDate}
+                        />
+                        <Table.Column 
+                            key="updatedAt" 
+                            title="Обновлено"
+                            dataIndex="updatedAt"
+                            render={renderDate}
+                        />
+                        <Table.Column<ITheme> 
+                            key="deleteAction"
+                            width={50}
+                            render= {(record) => (
+                                <DeleteOutlined className="trigger" onClick={() => {
+                                    showDeleteConfirm(() => mutate(record))
+                                }}/>
+                            )}
+                        />
+                    </Table>
                 </Col>
             </Row>
         </SpaceVertical>
     );
 }
+
+const renderDate = (value: string) => moment.utc(value).format('ll');
+const renderThemeLabel = (_value: string, record: ITheme) => <Link to={generatePath(routeMap.details.path, {id: record.id})}>{record.label}</Link>
+
+const showDeleteConfirm = (onConfirm: Function) => {
+    confirm({
+        title: 'Вы уверены что хотите удалить эту тематику?',
+        icon: <ExclamationCircleOutlined />,
+        okText: 'Да',
+        okType: 'danger',
+        cancelText: 'Нет',
+        onOk: () => onConfirm(),
+    });
+};

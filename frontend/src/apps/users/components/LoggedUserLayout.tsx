@@ -34,10 +34,10 @@ export const LoggedUserLayout: React.FC = () => {
                 <Header className="site-layout-background" style={{ padding: 0 }}>
                     <div className="header-actions">
                         {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                            className: "trigger",
+                            className: "trigger icon-xl",
                             onClick: () => setCollapsed(!collapsed),
                         })}
-                        <LogoutOutlined className="trigger" onClick={handleLogout}/>
+                        <LogoutOutlined className="trigger icon-xl" onClick={handleLogout}/>
                     </div>
                 </Header>
                 <Outlet />

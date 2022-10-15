@@ -1,4 +1,4 @@
-import { http, post, get, put } from 'core/http';
+import { http, post, get, put, del } from 'core/http';
 import { IPaginatedData } from 'core/models';
 import { defaultPageSize } from 'core/consts';
 import { IQuestion, ITheme } from './models';
@@ -12,6 +12,8 @@ export const getThemesList = (page: number = 0) => http.get<IPaginatedData<IThem
 );
 
 export const createTheme = (theme: ITheme) => post<ITheme>('/questions/themes/', theme);
+
+export const deleteTheme = (theme: ITheme) => del<ITheme>(`/questions/themes/${theme.id}/`,);
 
 export const editTheme = (theme: ITheme, id: string) => put<ITheme>(`/questions/themes/${id}/`, theme);
 
