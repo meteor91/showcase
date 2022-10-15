@@ -12,6 +12,6 @@ export const paginationStorage = {
             return +val;
         }
 
-        return 0;
+        return 1;
     },
 }

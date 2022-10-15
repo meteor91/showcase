@@ -24,7 +24,12 @@ export const ThemesList: React.FC = () => {
         (theme: ITheme) => deleteTheme(theme), 
         {
             onSuccess: () => {
-                refetch();
+                const isFirstPage = page - 1 <= 0;
+                if (!isFirstPage && data!.data.results.length <= 1) {
+                    setPage(page - 1);
+                } else {
+                    refetch();
+                }
             },
         }
     );
