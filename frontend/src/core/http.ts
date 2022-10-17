@@ -1,6 +1,8 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { notification } from 'antd';
+import { clearCurrentUser } from 'apps/users/slices';
 import { adaptFromApi, adaptToApi } from './utils';
+import { store } from './store';
 
 export const http = axios.create({
     baseURL: "/api",
@@ -20,7 +22,7 @@ http.interceptors.response.use(
     },
     (error: AxiosError) => {
         if (error.response?.status === 401) {
-            //TODO: продумать протухание сессии.
+            store.dispatch(clearCurrentUser());
         }
 
         if (error.response) {

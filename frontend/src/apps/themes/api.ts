@@ -4,18 +4,18 @@ import { defaultPageSize } from 'core/consts';
 import { IQuestion, ITheme } from './models';
 
 export const getQuestionsList = (page: number = 0) => http.get<IPaginatedData<IQuestion>>(
-    `/questions/questions/?limit=${defaultPageSize}${page ? `&offset=${defaultPageSize*(page-1)}`: ''}`
+    `/themes/questions/?limit=${defaultPageSize}${page ? `&offset=${defaultPageSize*(page-1)}`: ''}`
 );
 
 export const getThemesList = (page: number = 0) => http.get<IPaginatedData<ITheme>>(
-    `/questions/themes/?limit=${defaultPageSize}${page ? `&offset=${defaultPageSize*(page-1)}`: ''}`
+    `/themes/themes/?limit=${defaultPageSize}${page ? `&offset=${defaultPageSize*(page-1)}`: ''}`
 );
 
-export const createTheme = (theme: ITheme) => post<ITheme>('/questions/themes/', theme);
+export const createTheme = (theme: ITheme) => post<ITheme>('/themes/themes/', theme);
 
-export const deleteTheme = (theme: ITheme) => del<ITheme>(`/questions/themes/${theme.id}/`,);
+export const deleteTheme = (theme: ITheme) => del<ITheme>(`/themes/themes/${theme.id}/`,);
 
-export const editTheme = (theme: ITheme, id: string) => put<ITheme>(`/questions/themes/${id}/`, theme);
+export const editTheme = (theme: ITheme, id: string) => put<ITheme>(`/themes/themes/${id}/`, theme);
 
 //TODO: разобраться с типизацией
-export const getTheme = (id: any) => get<ITheme>(`/questions/themes/${id}/`);
+export const getTheme = (id: any) => get<ITheme>(`/themes/themes/${id}/`);

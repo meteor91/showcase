@@ -36,7 +36,7 @@ describe('login to the app', () => {
         cy.intercept('POST', '/api/users/login/').as('loginFails');
         cy.get('[data-testid=submit]').click();
 
-        cy.get('[data-testid=serverRrror-item').find('span.ant-typography-danger').should('not.be.empty');
+        cy.get('[data-testid=serverError-item').find('span.ant-typography-danger').should('not.be.empty');
 
         cy.wait('@loginFails').its('response.statusCode').should('eq', 400);
 

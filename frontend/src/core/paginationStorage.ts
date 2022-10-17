@@ -6,7 +6,6 @@ export const paginationStorage = {
     },
     getItem(key: string): number {
         const val = sessionStorage.getItem(`${paginationKey}-${key}`);
-        console.log('getItem', val)
         
         if (val) {
             return +val;

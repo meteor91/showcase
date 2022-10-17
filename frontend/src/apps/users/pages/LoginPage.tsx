@@ -72,7 +72,7 @@ export const LoginPage: React.FC = () => {
                             {mutation.error?.nonFieldErrors && <Text type="danger">{mutation.error.nonFieldErrors}</Text>}
                         </Form.Item> */}
                         {mutation.error?.nonFieldErrors && (
-                            <Row style={{marginBottom: 24}} data-testid="serverRrror-item">
+                            <Row style={{marginBottom: 24}} data-testid="serverError-item">
                                 <Col offset={8} span={16}>
                                     <Text type="danger">{mutation.error.nonFieldErrors}</Text>
                                 </Col>
