@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from "react-i18next";
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Select, Drawer, Row, Col } from 'antd';
 import { ITheme, TThemeFieldErrors } from '../models';
@@ -23,7 +24,7 @@ export const ThemeForm: React.FC<IProps> = (props) => {
 
     const {onSubmit, prefill, serverValidationErrors, isLoading} = props;
     const [drawlerOpened, setDrawlerOpened] = useState(false);
-
+    const {t} = useTranslation();
     useEffect(() => {
         serverValidationErrors && setDrawlerOpened(true);
     }, [serverValidationErrors]);
@@ -36,9 +37,9 @@ export const ThemeForm: React.FC<IProps> = (props) => {
             initialValues={prefill}
         >
             <Form.Item 
-                label="Название"
+                label={t('themes.fieldNames.label')}
                 name="label"
-                rules={[{ required: true }]}
+                rules={[{ required: true, message: t('common.formErrors.required') }]}
             >
                 <Input />
             </Form.Item>
@@ -47,32 +48,32 @@ export const ThemeForm: React.FC<IProps> = (props) => {
             {(fields, { add, remove }) => (
                 <>
                     {fields.map(({ key, name, ...restField }) => (
-                        <Row key={key}>
+                        <Row key={key} data-testid={`questionItem-${key}`}>
                             <Col lg={14} xs={24}>
                                 <Form.Item
                                     {...restField}
                                     name={[name, 'label']}
-                                    rules={[{ required: true, message: 'Missing label' }]}
+                                    rules={[{ required: true, message: t('common.formErrors.required') }]}
                                 >
-                                    <Input placeholder="Вопрос" />
+                                    <Input placeholder={t('themes.questions.label')} />
                                 </Form.Item>
                             </Col>
                             <Col lg={5} xs={24}>
                                 <Form.Item
                                     {...restField}
                                     name={[name, 'answer']}
-                                    rules={[{ required: true, message: 'Missing answer' }]}
+                                    rules={[{ required: true, message: t('common.formErrors.required') }]}
                                 >
-                                    <Input placeholder="Ответ" />
+                                    <Input placeholder={t('themes.questions.answer')} />
                                 </Form.Item>
                             </Col>
                             <Col lg={4} xs={16}>
                                 <Form.Item
                                     {...restField}
                                     name={[name, 'price']}
-                                    rules={[{ required: true, message: 'Missing price' }]}
+                                    rules={[{ required: true, message: t('common.formErrors.required') }]}
                                 >
-                                    <Select style={{ width: 120 }}>
+                                    <Select style={{ width: 120 }} placeholder={t('themes.questions.price')}>
                                         <Option value="100">100</Option>
                                         <Option value="200">200</Option>
                                         <Option value="300">300</Option>
@@ -88,7 +89,7 @@ export const ThemeForm: React.FC<IProps> = (props) => {
                     ))}
                     <Form.Item>
                         <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                            Add field
+                            {t('themes.addQuestion')}
                         </Button>
                     </Form.Item>
                 </>
@@ -96,7 +97,7 @@ export const ThemeForm: React.FC<IProps> = (props) => {
             </Form.List>
             <Form.Item>
                 <Button type="primary" htmlType="submit" disabled={isLoading}>
-                    Отправить
+                    {t('common.action.submit')}
                 </Button>
             </Form.Item>
             <Drawer open={drawlerOpened} onClose={() => setDrawlerOpened(false)}>

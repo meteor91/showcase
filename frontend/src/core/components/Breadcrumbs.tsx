@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import {useTranslation} from 'react-i18next';
 import { Breadcrumb, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { TRoutePaths } from 'core/models';
@@ -15,10 +16,11 @@ const antIcon = <LoadingOutlined style={{ fontSize: 14 }} spin />;
 
 export const Breadcrumbs = <T extends string>(props: IProps<T>): React.ReactElement => {
     const {path, routeMap} = props;
-    const pageName = useSelector((state: TAppState) => state.pageName);
-    
+    const pageName = useSelector((state: TAppState) => state.settings.pageName);
+    const {t} = useTranslation();
+
     const items = path.map((item: T) => {
-        let label: React.ReactNode = <Link to={routeMap[item].path}>{routeMap[item].name}</Link>;
+        let label: React.ReactNode = <Link to={routeMap[item].path}>{t(routeMap[item].name)}</Link>;
         if (item === 'details') {
             if (pageName.status === 'success') {
                 label = pageName.name;

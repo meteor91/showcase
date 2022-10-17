@@ -1,0 +1,47 @@
+{
+  "login": {
+    "form": {
+      "username": {
+        "label": "Username",
+        "rules": {
+          "required": "Username required"
+        }
+      },
+      "password": {
+        "label": "Password",
+        "rules": {
+          "required": "Password required"
+        }
+      }
+    }
+  },
+  "themes": {
+    "theme": "Themes",
+    "fieldNames": {
+      "label": "Name",
+      "author": "Author",
+      "createdAt": "Created at",
+      "updatedAt": "Updated at"
+    },
+    "questions": {
+      "label": "Name",
+      "answer": "Answer",
+      "price": "Price"
+    },
+    "addQuestion": "Add question",
+    "deleteAlert": "Are you sure you want to delete this theme?"
+  },
+  "common": {
+    "action": {
+      "create": "Create",
+      "submit": "Submit",
+      "edit": "Edit",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "details": "Details",
+    "formErrors": {
+      "required": "This field required"
+    }
+  }
+}

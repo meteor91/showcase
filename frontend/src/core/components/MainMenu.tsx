@@ -1,3 +1,4 @@
+import i18n from 'core/i18n'
 import React from 'react';
 import { BulbOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
@@ -11,13 +12,13 @@ const menuRoutes = [
     }
 ]
 
-const menuItems = menuRoutes.map((menuRoute) => {
+const menuItems = () => menuRoutes.map((menuRoute) => {
     return {
         key: menuRoute.path,
         label: (
             <Link to={menuRoute.path}>
                 {menuRoute.icon}
-                <span>{menuRoute.name}</span>
+                <span>{i18n.t<string>(menuRoute.name)}</span>
             </Link>
         ),
     }
@@ -34,7 +35,7 @@ export const MainMenu: React.FC = () => {
             mode="inline"
             defaultSelectedKeys={defaultSelectedKeys}
             style={{height: "100vh"}}
-            items={menuItems}
+            items={menuItems()}
         />  
     )
 };

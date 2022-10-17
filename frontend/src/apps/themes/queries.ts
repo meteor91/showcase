@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
-import { setPageName } from 'core/slices/pageName';
+import { setPageName } from 'core/slices/settings';
 import { getTheme } from './api';
 
 export const useDetailsQuery = (id: string) => {

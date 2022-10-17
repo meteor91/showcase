@@ -10,18 +10,18 @@ export enum ThemesPaths {
 export const routeMap: TRoutePaths<ThemesPaths> = {
     list: {
         path: '/themes',
-        name: 'Тематики',
+        name: 'themes.theme',
     },
     create: {
         path: '/themes/create',
-        name: 'Создать',
+        name: 'common.action.create',
     },   
     details: {
         path: '/themes/:id/details',
-        name: 'Детали',
+        name: 'common.details',
     },
     edit: {
         path: '/themes/:id/edit',
-        name: 'Редактировать',
+        name: 'common.action.edit',
     },
 }

@@ -1,0 +1,47 @@
+{
+  "login": {
+    "form": {
+      "username": {
+        "label": "Имя пользователя",
+        "rules": {
+          "required": "Введите имя пользователя"
+        }
+      },
+      "password": {
+        "label": "Имя пароль",
+        "rules": {
+          "required": "Введите пароль"
+        }
+      }
+    }
+  },
+  "themes": {
+    "theme": "Тематика",
+    "fieldNames": {
+      "label": "Название",
+      "author": "Автор",
+      "createdAt": "Создано",
+      "updatedAt": "Обновлено"
+    },
+    "questions": {
+      "label": "Название",
+      "answer": "Ответ",
+      "price": "Цена"
+    },
+    "deleteAlert": "Вы уверены что хотите удалить эту тематику?",
+    "addQuestion": "Добавить вопрос"
+  },
+  "common": {
+    "action": {
+      "create": "Создать",
+      "submit": "Отправить",
+      "edit": "Редактировать",
+      "yes": "Да",
+      "no": "Нет"
+    },
+    "details": "Детали",
+    "formErrors": {
+      "required": "Обязательное поле"
+    }
+  }
+}

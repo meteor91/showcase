@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { settingsSlice } from 'core/slices/settings';
 import { userSlice } from 'apps/users/slices';
-import { pageNameSlice } from './slices/pageName';
 
 export const store = configureStore({
     reducer: {
         users: userSlice.reducer,
-        pageName: pageNameSlice.reducer,
+        settings: settingsSlice.reducer,
     },
 });
 
