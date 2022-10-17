@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Layout, Row, Col, Button, Form, Input, Typography } from 'antd';
 import { ServerValidateErrors } from 'core/models';
-import { loginUser } from '../api';
-import { ILoginForm, IUserState } from '../models';
-import { setCurrentUser } from '../slices';
+import { loginUser } from 'core/auth/api';
+import { ILoginForm, IUser } from 'apps/users/models';
+import { setCurrentUser } from 'apps/users/slices';
+import { setAuthorized } from 'core/auth/slices';
 import { routeMap } from 'core/routeMap';
 
 const { Text } = Typography;
@@ -17,15 +18,16 @@ const styles = {
 };
 
 export const LoginPage: React.FC = () => {
-    const mutation = useMutation<IUserState, ServerValidateErrors<ILoginForm>, ILoginForm>(loginUser);
+    const mutation = useMutation<IUser, ServerValidateErrors<ILoginForm>, ILoginForm>(loginUser);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {t} = useTranslation();
 
     const onFinish = (values: ILoginForm) => {
         mutation.mutate(values, {
-            onSuccess: (result: IUserState) => {
+            onSuccess: (result: IUser) => {
                 dispatch(setCurrentUser(result));
+                dispatch(setAuthorized(true));
                 navigate(routeMap.themes.list.path);
             }
         });

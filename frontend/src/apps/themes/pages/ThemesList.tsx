@@ -10,7 +10,7 @@ import { dataUtils } from 'core/utils';
 import { defaultPageSize } from 'core/consts';
 import { SpaceVertical } from 'core/components/SpaceVertical';
 import { paginationStorage } from 'core/paginationStorage';
-import {TAppState} from 'core/store';
+import { TAppState } from 'core/store';
 import { deleteTheme, getThemesList } from '../api';
 import { ITheme } from '../models';
 import { routeMap } from '../routeMap';
@@ -51,6 +51,7 @@ export const ThemesList: React.FC = () => {
         total:  data?.data.total,
         pageSize: defaultPageSize,
         defaultCurrent: page,
+        hideOnSinglePage: true,
     };
 
     return (

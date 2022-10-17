@@ -3,6 +3,7 @@ import { notification } from 'antd';
 import { clearCurrentUser } from 'apps/users/slices';
 import { adaptFromApi, adaptToApi } from './utils';
 import { store } from './store';
+import { setAuthorized } from './auth/slices';
 
 export const http = axios.create({
     baseURL: "/api",
@@ -23,6 +24,7 @@ http.interceptors.response.use(
     (error: AxiosError) => {
         if (error.response?.status === 401) {
             store.dispatch(clearCurrentUser());
+            store.dispatch(setAuthorized(false));
         }
 
         if (error.response) {

@@ -1,6 +1,6 @@
 import i18n from 'core/i18n'
 import React from 'react';
-import { BulbOutlined } from '@ant-design/icons';
+import { BulbOutlined, UserOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { routeMap } from '../routeMap';
@@ -9,6 +9,10 @@ const menuRoutes = [
     {
         ...routeMap.themes.list,
         icon: <BulbOutlined />
+    },
+    {
+        ...routeMap.users.list,
+        icon: <UserOutlined />
     }
 ]
 

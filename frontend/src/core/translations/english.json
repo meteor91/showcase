@@ -31,6 +31,14 @@
     "addQuestion": "Add question",
     "deleteAlert": "Are you sure you want to delete this theme?"
   },
+  "users": {
+    "user": "Users",
+    "fieldNames": {
+      "username": "User",
+      "joinDate": "Created date",
+      "role": "Role"
+    }
+  },
   "common": {
     "action": {
       "create": "Create",

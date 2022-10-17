@@ -7,8 +7,9 @@ import { MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined } from '@ant-desig
 import { Button, Dropdown, Layout, Menu, notification } from 'antd';
 import { MainMenu } from 'core/components/MainMenu';
 import { setLocale } from 'core/slices/settings';
+import { logoutUser } from 'core/auth/api';
 import { clearCurrentUser } from 'apps/users/slices';
-import { logoutUser } from 'apps/users/api';
+import { setAuthorized } from '../slices';
 
 const { Header, Sider } = Layout;
 
@@ -22,6 +23,7 @@ export const LoggedUserLayout: React.FC = () => {
         mutation.mutate(undefined, {
             onSuccess: () => {
                 dispatch(clearCurrentUser());
+                dispatch(setAuthorized(false))
             }
         });
     };

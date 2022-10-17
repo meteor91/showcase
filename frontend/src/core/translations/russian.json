@@ -31,6 +31,14 @@
     "deleteAlert": "Вы уверены что хотите удалить эту тематику?",
     "addQuestion": "Добавить вопрос"
   },
+  "users": {
+    "user": "Пользователи",
+    "fieldNames": {
+      "username": "Пользователь",
+      "joinDate": "Дата создания",
+      "role": "Роль"
+    }
+  },
   "common": {
     "action": {
       "create": "Создать",

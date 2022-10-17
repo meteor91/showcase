@@ -2,10 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { getCurrentUser } from 'apps/users/api';
+import { getCurrentUser } from 'core/auth/api';
 import { Layout, Spin } from 'antd';
-import { ILoggedUser } from 'apps/users/models';
+import { IUser } from 'apps/users/models';
 import { setCurrentUser, clearCurrentUser } from 'apps/users/slices';
+import { setAuthorized } from 'core/auth/slices';
 import { TAppState } from 'core/store';
 
 const containerStyle = {
@@ -24,27 +25,29 @@ export const CheckAuth: React.FC<IProps> = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
-    const currentUser = useSelector(selectCurrentUser);
-    const currentUserRef = useRef(currentUser);
+    const isAuthorized = useSelector(selectAuthFlag);
+    const isAuthorizedRef = useRef(isAuthorized);
 
     const {isLoading} = useQuery('currentUser', getCurrentUser, {      
-        onSuccess: (user: ILoggedUser) => {
+        onSuccess: (user: IUser) => {
             dispatch(setCurrentUser(user));
+            dispatch(setAuthorized(true));
             const path = location.pathname !== '/login' ? location.pathname : props.onSuccessRedirectPath;
             navigate(path);
         },
         onError: () => {
             dispatch(clearCurrentUser());
+            dispatch(setAuthorized(false));
             navigate(props.onFailRedirectPath);
         }
     });
 
     useEffect(() => {
-        if (currentUserRef.current !== null && currentUser === null) {
+        if (!isAuthorized && isAuthorizedRef.current) {
             navigate('/login');
         }
-        currentUserRef.current = currentUser;
-    }, [currentUser, navigate]);
+        isAuthorizedRef.current = isAuthorized;
+    }, [isAuthorized, navigate]);
 
     if (isLoading) {
         return (
@@ -59,6 +62,4 @@ export const CheckAuth: React.FC<IProps> = (props) => {
     return <Outlet />;
 };
 
-function selectCurrentUser(state: TAppState) {
-    return state.users.currentUser;
-}
+export const selectAuthFlag = (state: TAppState) => state.auth.authorized;

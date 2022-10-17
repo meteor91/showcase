@@ -1,9 +1,6 @@
-export interface ILoggedUser {
+export interface IUser {
     username: string;
-}
-
-export interface IUserState {
-    user: ILoggedUser;
+    id: string
 }
 
 export interface ILoginForm {

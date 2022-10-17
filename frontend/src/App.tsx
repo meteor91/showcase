@@ -9,10 +9,11 @@ import { store } from 'core/store';
 import { queryClient } from 'core/queryClient';
 import { ContentLayout } from 'core/components/ContentLayout';
 import { QuestionsList } from 'apps/themes/pages/QuestionsList';
-import { LoginPage } from 'apps/users/pages/LoginPage';
-import { CheckAuth } from 'apps/users/components/CheckAuth';
-import { LoggedUserLayout } from 'apps/users/components/LoggedUserLayout';
+import { LoginPage } from 'core/auth/pages/LoginPage';
+import { CheckAuth } from 'core/auth/components/CheckAuth';
+import { LoggedUserLayout } from 'core/auth/components/LoggedUserLayout';
 import { themesRoutes } from 'apps/themes/Routes';
+import { usersRoutes } from 'apps/users/routes';
 import {ConfigProvider} from 'core/components/ConfigProvider';
 
 const App: React.FC = () => {
@@ -32,6 +33,7 @@ const App: React.FC = () => {
                                         <ContentLayout content={<QuestionsList />} />
                                     } />
                                     {themesRoutes()}
+                                    {usersRoutes()}
                                 </Route>
                             </Route>
                         </Routes>
