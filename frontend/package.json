@@ -32,7 +32,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress:open": "cypress open --env DJANGO_CONFIGURATION=Cypress"
+    "cypress:open": "cypress open",
+    "cypress:open-dev": "cypress open --env COMMAND_DELAY=300"
   },
   "eslintConfig": {
     "extends": [

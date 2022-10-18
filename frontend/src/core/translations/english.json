@@ -23,8 +23,15 @@
       "createdAt": "Created at",
       "updatedAt": "Updated at"
     },
+    "validationErrors": {
+      "themeName": "Theme name:",
+      "questions": "Questions:",
+      "questionLabel": "Question № {{num}}:",
+      "questionAnswer": "Answer to question № {{num}}:",
+      "questionPrice": "Price for question answer № {{num}}:"
+    },
     "questions": {
-      "label": "Name",
+      "label": "Question",
       "answer": "Answer",
       "price": "Price"
     },
@@ -43,6 +50,7 @@
     "action": {
       "create": "Create",
       "submit": "Submit",
+      "cancel": "Cancel",
       "edit": "Edit",
       "yes": "Yes",
       "no": "No"
@@ -50,6 +58,9 @@
     "details": "Details",
     "formErrors": {
       "required": "This field required"
+    },
+    "serverError": {
+      "tryLater": "Something going wrong, please try later"
     }
   }
 }

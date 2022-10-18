@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { generatePath, useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { createTheme } from '../api';
 import { ITheme, TThemeFieldErrors } from '../models';
@@ -19,6 +19,7 @@ export const ThemeCreate: React.FC = () => {
             onSubmit={mutation.mutate}
             isLoading={mutation.isLoading}
             serverValidationErrors={mutation.error}
+            onCancel={() => navigate(generatePath(routeMap.list.path))}
         />
     )
 }

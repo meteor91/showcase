@@ -23,8 +23,15 @@
       "createdAt": "Создано",
       "updatedAt": "Обновлено"
     },
+    "validationErrors": {
+      "themeName": "Название тематики:",
+      "questions": "Вопросы:",
+      "questionLabel": "Вопрос № {{num}}:",
+      "questionAnswer": "Ответ на вопрос № {{num}}:",
+      "questionPrice": "Цена ответа на вопрос № {{num}}:"
+    },
     "questions": {
-      "label": "Название",
+      "label": "Вопрос",
       "answer": "Ответ",
       "price": "Цена"
     },
@@ -43,6 +50,7 @@
     "action": {
       "create": "Создать",
       "submit": "Отправить",
+      "cancel": "Отменить",
       "edit": "Редактировать",
       "yes": "Да",
       "no": "Нет"
@@ -50,6 +58,9 @@
     "details": "Детали",
     "formErrors": {
       "required": "Обязательное поле"
+    },
+    "serverError": {
+      "tryLater": "Что то пошло не так, повторите попытку позже"
     }
   }
 }

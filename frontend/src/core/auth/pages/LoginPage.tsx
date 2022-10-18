@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useMutation } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Layout, Row, Col, Button, Form, Input, Typography } from 'antd';
 import { ServerValidateErrors } from 'core/models';
@@ -20,6 +20,7 @@ const styles = {
 export const LoginPage: React.FC = () => {
     const mutation = useMutation<IUser, ServerValidateErrors<ILoginForm>, ILoginForm>(loginUser);
     const navigate = useNavigate();
+    let [searchParams] = useSearchParams();
     const dispatch = useDispatch();
     const {t} = useTranslation();
 
@@ -28,7 +29,8 @@ export const LoginPage: React.FC = () => {
             onSuccess: (result: IUser) => {
                 dispatch(setCurrentUser(result));
                 dispatch(setAuthorized(true));
-                navigate(routeMap.themes.list.path);
+                const redirectTo = searchParams.get('redirectTo')
+                navigate(redirectTo ? redirectTo : routeMap.themes.list.path);
             }
         });
     };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from "react-i18next";
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Select, Drawer, Row, Col } from 'antd';
+import { Button, Form, Input, Select, Drawer, Row, Col, Space } from 'antd';
 import { ITheme, TThemeFieldErrors } from '../models';
 import { ThemeServerValidationErrors } from './ThemeServerValidationErrors';
 
@@ -12,6 +12,7 @@ interface IProps {
     isLoading?: boolean;
     prefill?: ITheme;
     serverValidationErrors?: TThemeFieldErrors | null;
+    onCancel?: () => void;
 }
 
 const iconStyle: React.CSSProperties = {
@@ -22,7 +23,7 @@ const iconStyle: React.CSSProperties = {
 
 export const ThemeForm: React.FC<IProps> = (props) => {
 
-    const {onSubmit, prefill, serverValidationErrors, isLoading} = props;
+    const {onSubmit, onCancel, prefill, serverValidationErrors, isLoading} = props;
     const [drawlerOpened, setDrawlerOpened] = useState(false);
     const {t} = useTranslation();
     useEffect(() => {
@@ -35,11 +36,13 @@ export const ThemeForm: React.FC<IProps> = (props) => {
             onFinish={onSubmit}
             autoComplete="off"
             initialValues={prefill}
+            data-testid="themeForm"
         >
             <Form.Item 
                 label={t('themes.fieldNames.label')}
                 name="label"
                 rules={[{ required: true, message: t('common.formErrors.required') }]}
+                data-testid="themeLabel-item"
             >
                 <Input />
             </Form.Item>
@@ -54,6 +57,7 @@ export const ThemeForm: React.FC<IProps> = (props) => {
                                     {...restField}
                                     name={[name, 'label']}
                                     rules={[{ required: true, message: t('common.formErrors.required') }]}
+                                    data-testid={`questionLabel-${key}-item`}
                                 >
                                     <Input placeholder={t('themes.questions.label')} />
                                 </Form.Item>
@@ -63,6 +67,7 @@ export const ThemeForm: React.FC<IProps> = (props) => {
                                     {...restField}
                                     name={[name, 'answer']}
                                     rules={[{ required: true, message: t('common.formErrors.required') }]}
+                                    data-testid={`questionAnswer-${key}-item`}
                                 >
                                     <Input placeholder={t('themes.questions.answer')} />
                                 </Form.Item>
@@ -72,6 +77,7 @@ export const ThemeForm: React.FC<IProps> = (props) => {
                                     {...restField}
                                     name={[name, 'price']}
                                     rules={[{ required: true, message: t('common.formErrors.required') }]}
+                                    data-testid={`questionPrice-${key}-item`}
                                 >
                                     <Select style={{ width: 120 }} placeholder={t('themes.questions.price')}>
                                         <Option value="100">100</Option>
@@ -83,11 +89,14 @@ export const ThemeForm: React.FC<IProps> = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col lg={1} style={iconStyle} xs={8}>
-                                <MinusCircleOutlined onClick={() => remove(name)} />
+                                <MinusCircleOutlined
+                                    onClick={() => remove(name)}
+                                    data-testid={`questionDelete-${key}-item`}
+                                />
                             </Col>
                         </Row>
                     ))}
-                    <Form.Item>
+                    <Form.Item data-testid="addQuestion-item">
                         <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
                             {t('themes.addQuestion')}
                         </Button>
@@ -95,12 +104,22 @@ export const ThemeForm: React.FC<IProps> = (props) => {
                 </>
             )}
             </Form.List>
-            <Form.Item>
-                <Button type="primary" htmlType="submit" disabled={isLoading}>
-                    {t('common.action.submit')}
-                </Button>
+            <Form.Item data-testid="formSubmit-item">
+                <Space>
+                    <Button data-testid="submit" type="primary" htmlType="submit" disabled={isLoading}>
+                        {t('common.action.submit')}
+                    </Button>
+                    {onCancel && (
+                        <Button data-testid="cancel" onClick={onCancel}>
+                            {t('common.action.cancel')}
+                        </Button>
+                    )}
+                </Space>
             </Form.Item>
-            <Drawer open={drawlerOpened} onClose={() => setDrawlerOpened(false)}>
+            <Drawer
+                open={drawlerOpened}
+                onClose={() => setDrawlerOpened(false)}
+            >
                 <ThemeServerValidationErrors serverErrors={serverValidationErrors}/>
             </Drawer>
         </Form>

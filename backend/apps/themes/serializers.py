@@ -3,6 +3,11 @@ from rest_framework import serializers
 from .models import Question, Theme
 
 
+def contain_bad_word(value):
+    value_lower = value.lower()
+    return any(val in value_lower for val in ['бля', 'fuck'])
+
+
 class QuestionSerializer(serializers.ModelSerializer):
     
     id = serializers.IntegerField(required=False)
@@ -13,7 +18,13 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     # для проверки отображения серверных ошибок
     def validate_label(self, value):
-        if 'бля' in value.lower():
+        if contain_bad_word(value):
+            raise serializers.ValidationError('Не разрешается использовать нецензурную брань')
+        return value
+
+    def validate_answer(self, value):
+        # if 'бля' in value.lower():
+        if contain_bad_word(value):
             raise serializers.ValidationError('Не разрешается использовать нецензурную брань')
         return value
 
@@ -64,11 +75,12 @@ class ThemeSerializer(serializers.ModelSerializer):
 
     # для проверки отображения серверных ошибок
     def validate_label(self, value):
-        if 'бля' in value.lower():
+        # if 'бля' in value.lower():
+        if contain_bad_word(value):
             raise serializers.ValidationError('Не разрешается использовать нецензурную брань')
         return value
 
     def validate_question_set(self, value):
-        if len(value)<=1:
+        if len(value) <= 1:
             raise serializers.ValidationError('Добавьте больше вопросов')
         return value

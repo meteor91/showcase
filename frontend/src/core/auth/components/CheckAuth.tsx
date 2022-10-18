@@ -38,7 +38,11 @@ export const CheckAuth: React.FC<IProps> = (props) => {
         onError: () => {
             dispatch(clearCurrentUser());
             dispatch(setAuthorized(false));
-            navigate(props.onFailRedirectPath);
+            navigate(
+                location.pathname === '/login'
+                    ? props.onFailRedirectPath
+                    : `${props.onFailRedirectPath}?redirectTo=${location.pathname}`
+            );
         }
     });
 
