@@ -22,6 +22,9 @@
   background: #fff;
 }
 
+.site-layout-background .ant-row:not(:last-child) {
+    margin-bottom: 20px;
+}
 .trigger {
   cursor: pointer;
   transition: color 0.3s;

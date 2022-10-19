@@ -1,6 +1,5 @@
 import React from 'react';
-import { Layout } from 'antd';
-import { SpaceVertical } from './SpaceVertical';
+import { Layout, Col, Row } from 'antd';
 
 const { Content } = Layout;
 
@@ -23,10 +22,18 @@ export const ContentLayout: React.FC<IProps> = (props) => {
             className="site-layout-background"
             style={contentStyle}
         >
-            <SpaceVertical>
-                {breadcrumbs}
-                {content}
-            </SpaceVertical>
+            {breadcrumbs && (
+                <Row>
+                    <Col span={24}>
+                        {breadcrumbs}
+                    </Col>
+                </Row>
+            )}
+            <Row style={{height: "100%"}}>
+                <Col span={24}>
+                    {content}
+                </Col>
+            </Row>
         </Content>
     );
 };
