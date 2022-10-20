@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from "react-i18next";
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { MinusCircleOutlined, PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Select, Drawer, Row, Col, Space } from 'antd';
 import { ITheme, TThemeFieldErrors } from '../models';
 import { ThemeServerValidationErrors } from './ThemeServerValidationErrors';
@@ -79,12 +79,16 @@ export const ThemeForm: React.FC<IProps> = (props) => {
                                     rules={[{ required: true, message: t('common.formErrors.required') }]}
                                     data-testid={`questionPrice-${key}-item`}
                                 >
-                                    <Select style={{ width: 120 }} placeholder={t('themes.questions.price')}>
-                                        <Option value="100">100</Option>
-                                        <Option value="200">200</Option>
-                                        <Option value="300">300</Option>
-                                        <Option value="400">400</Option>
-                                        <Option value="500">500</Option>
+                                    <Select
+                                        style={{ width: 120 }}
+                                        placeholder={t('themes.questions.price')}
+                                        data-testid="select"
+                                    >
+                                        <Option value="100" data-testid={`questionPrice-${key}-value-100`}>100</Option>
+                                        <Option value="200" data-testid={`questionPrice-${key}-value-200`}>200</Option>
+                                        <Option value="300" data-testid={`questionPrice-${key}-value-300`}>300</Option>
+                                        <Option value="400" data-testid={`questionPrice-${key}-value-400`}>400</Option>
+                                        <Option value="500" data-testid={`questionPrice-${key}-value-500`}>500</Option>
                                     </Select>
                                 </Form.Item>
                             </Col>
@@ -119,6 +123,8 @@ export const ThemeForm: React.FC<IProps> = (props) => {
             <Drawer
                 open={drawlerOpened}
                 onClose={() => setDrawlerOpened(false)}
+                data-testid="drawler"
+                closeIcon={<CloseOutlined data-testid="closeErrorsDrawler"/>}
             >
                 <ThemeServerValidationErrors serverErrors={serverValidationErrors}/>
             </Drawer>

@@ -3,9 +3,10 @@ from rest_framework import serializers
 from .models import Question, Theme
 
 
-def contain_bad_word(value):
+def check_obscene_language(value):
     value_lower = value.lower()
-    return any(val in value_lower for val in ['бля', 'fuck'])
+    if any(val in value_lower for val in ['бля', 'fuck']):
+        raise serializers.ValidationError('Obscene language is forbidden')
 
 
 class QuestionSerializer(serializers.ModelSerializer):
@@ -18,14 +19,11 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     # для проверки отображения серверных ошибок
     def validate_label(self, value):
-        if contain_bad_word(value):
-            raise serializers.ValidationError('Не разрешается использовать нецензурную брань')
+        check_obscene_language(value)
         return value
 
     def validate_answer(self, value):
-        # if 'бля' in value.lower():
-        if contain_bad_word(value):
-            raise serializers.ValidationError('Не разрешается использовать нецензурную брань')
+        check_obscene_language(value)
         return value
 
 
@@ -75,12 +73,10 @@ class ThemeSerializer(serializers.ModelSerializer):
 
     # для проверки отображения серверных ошибок
     def validate_label(self, value):
-        # if 'бля' in value.lower():
-        if contain_bad_word(value):
-            raise serializers.ValidationError('Не разрешается использовать нецензурную брань')
+        check_obscene_language(value)
         return value
 
     def validate_question_set(self, value):
         if len(value) <= 1:
-            raise serializers.ValidationError('Добавьте больше вопросов')
+            raise serializers.ValidationError('Add more questions')
         return value

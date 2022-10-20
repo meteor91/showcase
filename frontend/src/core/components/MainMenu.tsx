@@ -37,7 +37,8 @@ export const MainMenu: React.FC = () => {
         <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={defaultSelectedKeys}
+            defaultSelectedKeys={[routeMap.themes.list.path]}
+            selectedKeys={defaultSelectedKeys}
             style={{height: "100vh"}}
             items={menuItems()}
         />  

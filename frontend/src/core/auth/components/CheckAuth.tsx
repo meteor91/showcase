@@ -21,6 +21,8 @@ interface IProps {
     onFailRedirectPath: string;
 }
 
+const doNotRedirectHereOnSuccessAuth = ['/', '/login'];
+
 export const CheckAuth: React.FC<IProps> = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -32,14 +34,17 @@ export const CheckAuth: React.FC<IProps> = (props) => {
         onSuccess: (user: IUser) => {
             dispatch(setCurrentUser(user));
             dispatch(setAuthorized(true));
-            const path = location.pathname !== '/login' ? location.pathname : props.onSuccessRedirectPath;
+
+            const path = doNotRedirectHereOnSuccessAuth.some((path: string) => path === location.pathname)
+                ? props.onSuccessRedirectPath
+                : location.pathname;
             navigate(path);
         },
         onError: () => {
             dispatch(clearCurrentUser());
             dispatch(setAuthorized(false));
             navigate(
-                location.pathname === '/login'
+                doNotRedirectHereOnSuccessAuth.some((path: string) => path !== location.pathname)
                     ? props.onFailRedirectPath
                     : `${props.onFailRedirectPath}?redirectTo=${location.pathname}`
             );

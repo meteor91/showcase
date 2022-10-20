@@ -16,34 +16,77 @@ export const ThemeServerValidationErrors: React.FC<{serverErrors?: TThemeFieldEr
 
     const errorsList = []
 
-    let key = 0;
+    let key = -1;
 
     if (serverErrors.label) {
-        errorsList.push(<Text type="danger" key={`serverError-${key++}`}>{t('themes.validationErrors.themeName')} {serverErrors.label}</Text>)
+        ++key;
+        errorsList.push(
+            <Text
+                type="danger"
+                key={`serverError-${key}`}
+                data-testid={`serverError-${key}`}
+            >
+                {t('themes.validationErrors.themeName')} {serverErrors.label}
+            </Text>
+        )
     }
 
     if (Array.isArray(serverErrors.questionSet)) {
         if (typeof serverErrors.questionSet[0] === 'string') {
             (serverErrors.questionSet as string[]).forEach(error => {
+                ++key;
                 errorsList.push(
-                    <Text type="danger" key={`serverError-${key++}`}>{t('themes.validationErrors.questions')} {error}</Text>
+                    <Text
+                        type="danger"
+                        key={`serverError-${key}`}
+                        data-testid={`serverError-${key}`}
+                    >
+                        {t('themes.validationErrors.questions')} {error}
+                    </Text>
                 );
             });
         } else {
             (serverErrors.questionSet as TQuestionSet[]).forEach((error, index) => {
                 const num = index + 1;
-                error.label && errorsList.push(
-                    <Text type="danger" key={`serverError-${key++}`}>{t('themes.validationErrors.questionLabel', {num})} {error.label}</Text>
-                );
-                error.answer && errorsList.push(
-                    <Text type="danger" key={`serverError-${key++}`}>{t('themes.validationErrors.questionAnswer', {num})} {error.answer}</Text>
-                );
-                error.price && errorsList.push(
-                    <Text type="danger" key={`serverError-${key++}`}>{t('themes.validationErrors.questionPrice', {num})} {error.price}</Text>
-                );
+                if (error.label) {
+                    ++key;
+                    errorsList.push(
+                        <Text
+                            type="danger"
+                            key={`serverError-${key}`}
+                            data-testid={`serverError-${key}`}
+                        >
+                            {t('themes.validationErrors.questionLabel', {num})} {error.label}
+                        </Text>
+                    );
+                }
+                if (error.answer) {
+                    ++key;
+                    errorsList.push(
+                        <Text
+                            type="danger"
+                            key={`serverError-${key}`}
+                            data-testid={`serverError-${key}`}
+                        >
+                            {t('themes.validationErrors.questionAnswer', {num})} {error.answer}
+                        </Text>
+                    );
+                }
+                if (error.price) {
+                    ++key;
+                    errorsList.push(
+                        <Text
+                            type="danger"
+                            key={`serverError-${key}`}
+                            data-testid={`serverError-${key}`}
+                        >
+                            {t('themes.validationErrors.questionPrice', {num})} {error.price}
+                        </Text>
+                    );
+                }
             });
         }
     }
     
-    return <Space direction="vertical">{errorsList}</Space>;
+    return <Space direction="vertical" data-testid="errorList">{errorsList}</Space>;
 }

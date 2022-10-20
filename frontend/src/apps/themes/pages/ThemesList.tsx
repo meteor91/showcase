@@ -74,6 +74,7 @@ export const ThemesList: React.FC = () => {
                         loading={dataUtils.isLoading(status, delStatus) || isRefetching}
                         dataSource={data?.data.results}
                         pagination={pagination}
+                        data-testid="themesTable"
                     >
                         <Table.Column 
                             key="label" 
@@ -85,6 +86,7 @@ export const ThemesList: React.FC = () => {
                             key="createdBy"
                             title={t<string>('themes.fieldNames.author')}
                             dataIndex="createdBy"
+                            render={renderAuthor}
                         />
                         <Table.Column
                             key="createdAt"
@@ -119,7 +121,24 @@ export const ThemesList: React.FC = () => {
 const renderDate = (value: string) => {
     return moment.utc(value).format('ll');
 }
-const renderThemeLabel = (_value: string, record: ITheme) => <Link to={generatePath(routeMap.details.path, {id: record.id})}>{record.label}</Link>
+
+const renderThemeLabel = (_value: string, record: ITheme) => (
+    <Link
+        to={generatePath(routeMap.details.path, {id: record.id})}
+        data-testid="themeName"
+    >
+        {record.label}
+    </Link>
+);
+
+const renderAuthor  = (_value: string, record: ITheme) => (
+    <Link
+        to='#'
+        data-testid="authorName"
+    >
+        {record.createdBy}
+    </Link>
+);
 
 const showDeleteConfirm = (onConfirm: Function, t: TFunction) => {
     confirm({

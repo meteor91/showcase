@@ -37,7 +37,7 @@ export const ThemeDetails: React.FC = () => {
         navigate(generatePath(routeMap.edit.path, {id: params.id}));
     }
 
-    if(dataUtils.isLoading(status)) {
+    if (dataUtils.isLoading(status)) {
         return <Spinner />;
     } else if (dataUtils.isReady(status) && data) {
         return (
