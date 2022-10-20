@@ -155,7 +155,7 @@ describe('createTheme', () => {
         cy.get('[data-testid=errorList]').should('not.be.visible');
     });
 
-    it.only('create theme', () => {
+    it('create theme', () => {
         cy.getAntdFormItem('themeLabel-item', 'input[type=text]')
             .type('test name');
 
