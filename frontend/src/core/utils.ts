@@ -19,8 +19,8 @@ export const isError = (status: TLoadingStatus) => {
     return status === ELoadingStatus.Error;
 }
 
-export const isReady = (status: TLoadingStatus) => {
-    return status === ELoadingStatus.Success;
+export const isReady = (...args: TLoadingStatus[]) => {
+    return args.some(status => status === ELoadingStatus.Success);
 }
 
 export const dataUtils = {

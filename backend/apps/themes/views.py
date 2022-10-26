@@ -6,7 +6,7 @@ from .serializers import QuestionSerializer, ThemeSerializer
 
 class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
-    queryset =  Question.objects.all()
+    queryset = Question.objects.all()
 
 
 class ThemeViewSet(viewsets.ModelViewSet):

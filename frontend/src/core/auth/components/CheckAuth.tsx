@@ -5,8 +5,7 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { getCurrentUser } from 'core/auth/api';
 import { Layout, Spin } from 'antd';
 import { IUser } from 'apps/users/models';
-import { setCurrentUser, clearCurrentUser } from 'apps/users/slices';
-import { setAuthorized } from 'core/auth/slices';
+import { clearAuthorized, setAuthorized } from 'core/auth/slices';
 import { TAppState } from 'core/store';
 
 const containerStyle = {
@@ -32,8 +31,7 @@ export const CheckAuth: React.FC<IProps> = (props) => {
 
     const {isLoading} = useQuery('currentUser', getCurrentUser, {      
         onSuccess: (user: IUser) => {
-            dispatch(setCurrentUser(user));
-            dispatch(setAuthorized(true));
+            dispatch(setAuthorized(user));
 
             const path = doNotRedirectHereOnSuccessAuth.some((path: string) => path === location.pathname)
                 ? props.onSuccessRedirectPath
@@ -41,8 +39,7 @@ export const CheckAuth: React.FC<IProps> = (props) => {
             navigate(path);
         },
         onError: () => {
-            dispatch(clearCurrentUser());
-            dispatch(setAuthorized(false));
+            dispatch(clearAuthorized());
             navigate(
                 doNotRedirectHereOnSuccessAuth.some((path: string) => path !== location.pathname)
                     ? props.onFailRedirectPath

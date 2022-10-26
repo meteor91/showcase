@@ -6,10 +6,17 @@ export interface IQuestion {
     themeLabel?: string;
 }
 
+export enum EThemeStatus {
+    ON_MODERATION = 'ON_MODERATION',
+    ACCEPTED = 'ACCEPTED',
+    DECLINED = 'DECLINED',
+}
+
 export interface ITheme {
     id?: string;
     label: string;
     questionSet?: IQuestion[];
+    status: EThemeStatus;
     createdBy: string;
     createdAt: string;
     updatedAt: string;

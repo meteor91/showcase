@@ -7,7 +7,6 @@ import { Layout, Row, Col, Button, Form, Input, Typography } from 'antd';
 import { ServerValidateErrors } from 'core/models';
 import { loginUser } from 'core/auth/api';
 import { ILoginForm, IUser } from 'apps/users/models';
-import { setCurrentUser } from 'apps/users/slices';
 import { setAuthorized } from 'core/auth/slices';
 import { routeMap } from 'core/routeMap';
 
@@ -26,9 +25,8 @@ export const LoginPage: React.FC = () => {
 
     const onFinish = (values: ILoginForm) => {
         mutation.mutate(values, {
-            onSuccess: (result: IUser) => {
-                dispatch(setCurrentUser(result));
-                dispatch(setAuthorized(true));
+            onSuccess: (user: IUser) => {
+                dispatch(setAuthorized(user));
                 const redirectTo = searchParams.get('redirectTo')
                 navigate(redirectTo ? redirectTo : routeMap.themes.list.path);
             }

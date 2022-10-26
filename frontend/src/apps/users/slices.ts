@@ -1,10 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { IUser } from './models';
+
+interface IState {
+    currentUser: IUser | null;
+}
+
+const initialState: IState = {
+    currentUser: null,
+}
 
 export const userSlice = createSlice({
     name: 'users',
-    initialState: {
-        currentUser: null,
-    },
+    initialState,
     reducers: {
         setCurrentUser: (state, action) => {
             state.currentUser = action.payload;

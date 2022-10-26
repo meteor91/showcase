@@ -1,15 +1,15 @@
 import i18n from 'i18next';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMutation } from 'react-query';
 import { Outlet } from 'react-router-dom';
 import { MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Layout, Menu, notification } from 'antd';
 import { MainMenu } from 'core/components/MainMenu';
+import { TAppState } from 'core/store';
 import { setLocale } from 'core/slices/settings';
 import { logoutUser } from 'core/auth/api';
-import { clearCurrentUser } from 'apps/users/slices';
-import { setAuthorized } from '../slices';
+import { clearAuthorized } from '../slices';
 
 const { Header, Sider } = Layout;
 
@@ -17,13 +17,13 @@ export const LoggedUserLayout: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [currentLang, setCurrentLang] = useState('EN');
     const dispatch = useDispatch();
+    const user = useSelector((state: TAppState) => state.auth.currentUser);
     const mutation = useMutation(logoutUser);
 
     const handleLogout = () => {
         mutation.mutate(undefined, {
             onSuccess: () => {
-                dispatch(clearCurrentUser());
-                dispatch(setAuthorized(false))
+                dispatch(clearAuthorized())
             }
         });
     };
@@ -54,6 +54,8 @@ export const LoggedUserLayout: React.FC = () => {
                             onClick: () => setCollapsed(!collapsed),
                         })}
                         <div>
+                            <Button type="text">{user?.username}</Button>
+
                             <Dropdown
                                 placement="bottom" 
                                 overlay={

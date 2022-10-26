@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table, Col, Row, Modal } from 'antd';
+import { Button, Table, Col, Row, Modal, Tag } from 'antd';
 import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link, useNavigate, generatePath } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
@@ -12,7 +12,7 @@ import { SpaceVertical } from 'core/components/SpaceVertical';
 import { paginationStorage } from 'core/paginationStorage';
 import { TAppState } from 'core/store';
 import { deleteTheme, getThemesList } from '../api';
-import { ITheme } from '../models';
+import {EThemeStatus, ITheme} from '../models';
 import { routeMap } from '../routeMap';
 
 const { confirm } = Modal;
@@ -102,6 +102,13 @@ export const ThemesList: React.FC = () => {
                             render={renderDate}
                             responsive={['xl']}
                         />
+                        <Table.Column
+                            key="status"
+                            title={t<string>('themes.fieldNames.status')}
+                            dataIndex="status"
+                            render={renderStatus}
+                            responsive={['md']}
+                        />
                         <Table.Column<ITheme> 
                             key="deleteAction"
                             width={50}
@@ -139,6 +146,16 @@ const renderAuthor  = (_value: string, record: ITheme) => (
         {record.createdBy}
     </Link>
 );
+
+const renderStatus = (_: string, {status}: ITheme) => {
+    if (status===EThemeStatus.ACCEPTED) {
+        return <Tag color="green">Accepted</Tag>;
+    } else if (status===EThemeStatus.ON_MODERATION) {
+        return <Tag color="orange">On moderation</Tag>;
+    } else {
+        return <Tag color="red">Declined</Tag>;
+    }
+}
 
 const showDeleteConfirm = (onConfirm: Function, t: TFunction) => {
     confirm({

@@ -48,3 +48,16 @@
 .form-list .ant-form-item {
     margin-bottom: 12px;
 }
+
+.user-added-themes-stats {
+    display: flex;
+
+    .themes-count {
+        font-size: 40px;
+        padding-right: 30px;
+
+        .theme-status {
+            font-size: 14px;
+        }
+    }
+}

@@ -21,8 +21,9 @@ const execCLI = (action: string) => {
 }
 
 export default defineConfig({
+    projectId: 'qq9v12',
     e2e: {
-        baseUrl: 'http://localhost:3000',
+        baseUrl: 'http://localhost:8000',
         setupNodeEvents(on, config) {
         // implement node event listeners here
             on('task', {
@@ -34,6 +35,6 @@ export default defineConfig({
         },
     },
     env: {
-        python,
+        homePage: '/themes'
     }
 });

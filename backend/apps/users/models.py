@@ -4,15 +4,15 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     class ROLES:
-        HOST = 'HOST'
-        PLAYER = 'PLAYER'
+        MODERATOR = 'MODERATOR'
+        BASIC = 'BASIC'
 
     ROLES_CHOICES = (
-        (ROLES.HOST, 'Хост'),
-        (ROLES.PLAYER, 'Игрок')
+        (ROLES.MODERATOR, 'Модератор'),
+        (ROLES.BASIC, 'Обычный пользователь')
     )
 
-    role = models.CharField('Роль', choices=ROLES_CHOICES, max_length=16)
+    role = models.CharField('Роль', choices=ROLES_CHOICES, max_length=16, null=False, default=ROLES.BASIC)
 
     def __str__(self):
         return self.username

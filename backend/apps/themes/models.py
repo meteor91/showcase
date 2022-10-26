@@ -6,8 +6,23 @@ from users.models import User
 
 # Create your models here.
 
+
 class Theme(BasicsModelMixin, models.Model):
     label = models.CharField(max_length=200)
+
+    class STATUS:
+        ON_MODERATION = 'ON_MODERATION'
+        ACCEPTED = 'ACCEPTED'
+        DECLINED = 'DECLINED'
+
+    STATUS_CHOICES = (
+        (STATUS.ON_MODERATION, 'On moderation'),
+        (STATUS.ACCEPTED, 'Accepted'),
+        (STATUS.DECLINED, 'Declined'),
+    )
+
+    status = models.CharField('Статус', choices=STATUS_CHOICES, max_length=16, default=STATUS.ON_MODERATION)
+
 
 class Question(BasicsModelMixin, models.Model):
     label = models.CharField(max_length=200)

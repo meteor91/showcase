@@ -4,7 +4,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import 'moment/locale/ru';
-import './App.css';
+import './App.scss';
 import { store } from 'core/store';
 import { queryClient } from 'core/queryClient';
 import { ContentLayout } from 'core/components/ContentLayout';

@@ -14,6 +14,9 @@ import { IUser } from '../models';
 import { routeMap } from '../routeMap';
 import { getUsersList } from '../api';
 
+/**
+ * Users list page.
+ */
 export const UsersList: React.FC = () => {
     const [page, setPage] = useState(paginationStorage.getItem('usersList'));
     const navigate = useNavigate();
@@ -64,12 +67,13 @@ export const UsersList: React.FC = () => {
                             key="label"
                             title={t<string>('users.fieldNames.username')}
                             dataIndex="label"
-                            render={renderUsername}
+                            render={renderUsernameLink}
                         />
                         <Table.Column
                             key="role"
                             title={t<string>('users.fieldNames.role')}
                             dataIndex="role"
+                            render={(value: string) => t(`users.role.${value}`)}
                         />
                         <Table.Column
                             key="dateJoined"
@@ -86,6 +90,4 @@ export const UsersList: React.FC = () => {
 
 const renderDate = (value: string) => moment.utc(value).format('ll');
 
-//TODO
 const renderUsernameLink = (_value: string, record: IUser) => <Link to={generatePath(routeMap.details.path, {id: record.id})}>{record.username}</Link>
-const renderUsername = (_value: string, record: IUser) => record.username;

@@ -21,7 +21,8 @@
       "label": "Name",
       "author": "Author",
       "createdAt": "Created at",
-      "updatedAt": "Updated at"
+      "updatedAt": "Updated at",
+      "status": "Status"
     },
     "validationErrors": {
       "themeName": "Theme name:",
@@ -36,14 +37,25 @@
       "price": "Price"
     },
     "addQuestion": "Add question",
-    "deleteAlert": "Are you sure you want to delete this theme?"
+    "deleteAlert": "Are you sure you want to delete this theme?",
+    "status": {
+      "ACCEPTED": "Accepted",
+      "ON_MODERATION": "On moderation",
+      "DECLINED": "Declined"
+    }
   },
   "users": {
     "user": "Users",
+    "themesAdded": "Themes added",
+    "lastAddedThemes": "Last added themes",
     "fieldNames": {
       "username": "User",
       "joinDate": "Created date",
       "role": "Role"
+    },
+    "role": {
+      "MODERATOR": "Moderator",
+      "BASIC": "Basic user"
     }
   },
   "common": {

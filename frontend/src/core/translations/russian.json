@@ -21,7 +21,8 @@
       "label": "Название",
       "author": "Автор",
       "createdAt": "Создано",
-      "updatedAt": "Обновлено"
+      "updatedAt": "Обновлено",
+      "status": "Статус"
     },
     "validationErrors": {
       "themeName": "Название тематики:",
@@ -36,14 +37,25 @@
       "price": "Цена"
     },
     "deleteAlert": "Вы уверены что хотите удалить эту тематику?",
-    "addQuestion": "Добавить вопрос"
+    "addQuestion": "Добавить вопрос",
+    "status": {
+      "ACCEPTED": "Принят",
+      "ON_MODERATION": "На модерации",
+      "DECLINED": "Отклонен"
+    }
   },
   "users": {
     "user": "Пользователи",
+    "themesAdded": "Добавленные темы",
+    "lastAddedThemes": "Последние добавленные темы",
     "fieldNames": {
       "username": "Пользователь",
       "joinDate": "Дата создания",
       "role": "Роль"
+    },
+    "role": {
+      "MODERATOR": "Модератор",
+      "BASIC": "Обычный пользователь"
     }
   },
   "common": {

@@ -1,5 +1,7 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
+
+from themes.models import Theme
 from .models import User
 
 
@@ -12,6 +14,22 @@ class UserSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
+
+
+class UserDetailsSerializer(serializers.ModelSerializer):
+
+    themes_count = serializers.SerializerMethodField()
+
+    def get_themes_count(self, obj):
+        return {
+            'accepted': obj.theme_set.filter(status=Theme.STATUS.ACCEPTED).count(),
+            'on_moderation': obj.theme_set.filter(status=Theme.STATUS.ON_MODERATION).count(),
+            'declined': obj.theme_set.filter(status=Theme.STATUS.DECLINED).count(),
+        }
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'date_joined', 'role', 'themes_count')
 
 
 class LoginUserSerializer(serializers.Serializer):

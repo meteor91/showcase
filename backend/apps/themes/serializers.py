@@ -33,7 +33,7 @@ class ThemeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Theme
-        fields = ['id', 'label', 'question_set', 'created_by', 'updated_at', 'created_at']
+        fields = ['id', 'label', 'question_set', 'created_by', 'updated_at', 'created_at', 'status']
 
     def create(self, validated_data):
         question_set = validated_data.pop('question_set')
