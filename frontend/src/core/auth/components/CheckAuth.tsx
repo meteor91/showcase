@@ -41,7 +41,7 @@ export const CheckAuth: React.FC<IProps> = (props) => {
         onError: () => {
             dispatch(clearAuthorized());
             navigate(
-                doNotRedirectHereOnSuccessAuth.some((path: string) => path !== location.pathname)
+                doNotRedirectHereOnSuccessAuth.some((path: string) => path === location.pathname)
                     ? props.onFailRedirectPath
                     : `${props.onFailRedirectPath}?redirectTo=${location.pathname}`
             );
@@ -50,7 +50,10 @@ export const CheckAuth: React.FC<IProps> = (props) => {
 
     useEffect(() => {
         if (!isAuthorized && isAuthorizedRef.current) {
-            navigate('/login');
+            const navigateTo = location.pathname === '/login'
+                ? '/login'
+                : `/login?redirectTo=${location.pathname}`;
+            navigate(navigateTo);
         }
         isAuthorizedRef.current = isAuthorized;
     }, [isAuthorized, navigate]);

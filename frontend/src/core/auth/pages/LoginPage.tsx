@@ -40,7 +40,7 @@ export const LoginPage: React.FC = () => {
                     <Form
                         name="login"
                         labelCol={{ span: 8 }}
-                        wrapperCol={{ span: 16 }}
+                        wrapperCol={{ span: 8 }}
                         initialValues={{ remember: true }}
                         onFinish={onFinish}
                         autoComplete="off"
@@ -67,7 +67,7 @@ export const LoginPage: React.FC = () => {
 
                         {mutation.error?.nonFieldErrors && (
                             <Row style={{marginBottom: 24}} data-testid="serverError-item">
-                                <Col offset={8} span={16}>
+                                <Col offset={8} span={8}>
                                     <Text type="danger">{mutation.error.nonFieldErrors}</Text>
                                 </Col>
                             </Row>
