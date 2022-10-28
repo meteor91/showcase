@@ -39,5 +39,5 @@ export enum ELoadingStatus {
 
 export interface IServerError {
     errorCode: string;
-    message: string
+    detail: string;
 }

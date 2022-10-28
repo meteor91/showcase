@@ -1,8 +1,10 @@
 from rest_framework import viewsets
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from django.db import transaction
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from users.permissions import ModeratorOnly
 from .exceptions import StatusAlreadyChanged
 from .models import Question, Theme, ThemeStatusChange
 from .serializers import QuestionSerializer, ThemeSerializer
@@ -22,6 +24,7 @@ class ThemeViewSet(viewsets.ModelViewSet):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated & ModeratorOnly])
 @transaction.atomic
 def change_status(request, theme_id, next_status):
     theme = Theme.objects.get(id=theme_id)

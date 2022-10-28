@@ -22,7 +22,7 @@ export const ChangeThemeStatus: React.FC<IProps> = (props) => {
         onSuccess: () => onSuccess(),
         onError: (error) => {
             notification.open({
-                message: error.message,
+                message: error.detail,
                 description: error.errorCode === 'status_already_changed' ? 'Please reload page' : undefined
             });
         }
