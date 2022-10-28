@@ -49,3 +49,10 @@ class Question(BasicsModelMixin, models.Model):
     @property
     def theme_label(self):
         return self.theme.label
+
+
+class ThemeStatusChange(BasicsModelMixin, models.Model):
+    prev_status = models.CharField('Старый статус', choices=Theme.STATUS_CHOICES, max_length=16)
+    next_status = models.CharField('Новый статус', choices=Theme.STATUS_CHOICES, max_length=16)
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
+

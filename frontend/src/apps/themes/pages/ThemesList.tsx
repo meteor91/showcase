@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table, Col, Row, Modal, Tag } from 'antd';
+import { Button, Table, Col, Row, Modal } from 'antd';
 import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link, useNavigate, generatePath } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 import { TFunction, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import moment from 'moment';
-import { dataUtils } from 'core/utils';
+import { dataUtils, renderDate } from 'core/utils';
 import { defaultPageSize } from 'core/consts';
 import { SpaceVertical } from 'core/components/SpaceVertical';
 import { paginationStorage } from 'core/paginationStorage';
 import { TAppState } from 'core/store';
 import { deleteTheme, getThemesList } from '../api';
-import {EThemeStatus, ITheme} from '../models';
+import { ITheme } from '../models';
 import { routeMap } from '../routeMap';
+import { renderStatus } from '../components/ThemeStatus';
 
 const { confirm } = Modal;
 
@@ -58,7 +58,7 @@ export const ThemesList: React.FC = () => {
         <SpaceVertical>
             <Row>
                 <Col span={24}>
-                    <Button 
+                    <Button
                         onClick={() => navigate(generatePath(routeMap.create.path))}
                         data-testid="createThemeButton"
                     >
@@ -76,8 +76,8 @@ export const ThemesList: React.FC = () => {
                         pagination={pagination}
                         data-testid="themesTable"
                     >
-                        <Table.Column 
-                            key="label" 
+                        <Table.Column
+                            key="label"
                             title={t<string>('themes.fieldNames.label')}
                             dataIndex="label"
                             render={renderThemeLabel}
@@ -95,8 +95,8 @@ export const ThemesList: React.FC = () => {
                             render={renderDate}
                             responsive={['md']}
                         />
-                        <Table.Column 
-                            key="updatedAt" 
+                        <Table.Column
+                            key="updatedAt"
                             title={t<string>('themes.fieldNames.updatedAt')}
                             dataIndex="updatedAt"
                             render={renderDate}
@@ -109,10 +109,10 @@ export const ThemesList: React.FC = () => {
                             render={renderStatus}
                             responsive={['md']}
                         />
-                        <Table.Column<ITheme> 
+                        <Table.Column<ITheme>
                             key="deleteAction"
                             width={50}
-                            render= {(record) => (
+                            render={(record) => (
                                 <DeleteOutlined className="trigger" onClick={() => {
                                     showDeleteConfirm(() => mutate(record), t)
                                 }}/>
@@ -123,10 +123,6 @@ export const ThemesList: React.FC = () => {
             </Row>
         </SpaceVertical>
     );
-}
-
-const renderDate = (value: string) => {
-    return moment.utc(value).format('ll');
 }
 
 const renderThemeLabel = (_value: string, record: ITheme) => (
@@ -146,16 +142,6 @@ const renderAuthor  = (_value: string, record: ITheme) => (
         {record.createdBy}
     </Link>
 );
-
-const renderStatus = (_: string, {status}: ITheme) => {
-    if (status===EThemeStatus.ACCEPTED) {
-        return <Tag color="green">Accepted</Tag>;
-    } else if (status===EThemeStatus.ON_MODERATION) {
-        return <Tag color="orange">On moderation</Tag>;
-    } else {
-        return <Tag color="red">Declined</Tag>;
-    }
-}
 
 const showDeleteConfirm = (onConfirm: Function, t: TFunction) => {
     confirm({

@@ -1,10 +1,12 @@
-import {camelCase, forEach, isArray, isObject, map, snakeCase} from 'lodash';
-import {ELoadingStatus, TLoadingStatus} from './models';
+import { camelCase, forEach, isArray, isObject, map, snakeCase } from 'lodash';
+import { ELoadingStatus, TLoadingStatus } from './models';
+import { EUserRole } from 'apps/users/models';
+import moment from 'moment';
 
 /**
  * Check is loading status.
  * 
- * @param status Current status. ...args: any[]
+ * @param ...args Current status.
  */
 export const isLoading = (...args: TLoadingStatus[]) => {
     return args.some(status => status === ELoadingStatus.Loading);
@@ -72,3 +74,13 @@ export const adaptFromApi = (sourceObject: any) => adapt(sourceObject, camelCase
  * @param sourceObject Object to adapt.
  */
 export const adaptToApi = (sourceObject: any) => adapt(sourceObject, snakeCase);
+
+/**
+ * Check if the role is moderator.
+ *
+ * @param [role] User current role.
+ * TODO: figure out ?types
+ */
+export const isModerator = (role?: EUserRole) => role === EUserRole.MODERATOR;
+
+export const renderDate = (date: string) => moment.utc(date).local().format('DD.MM.YY HH:mm:ss');

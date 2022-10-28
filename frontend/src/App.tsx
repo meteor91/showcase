@@ -14,7 +14,7 @@ import { CheckAuth } from 'core/auth/components/CheckAuth';
 import { LoggedUserLayout } from 'core/auth/components/LoggedUserLayout';
 import { themesRoutes } from 'apps/themes/Routes';
 import { usersRoutes } from 'apps/users/routes';
-import {ConfigProvider} from 'core/components/ConfigProvider';
+import { ConfigProvider } from 'core/components/ConfigProvider';
 
 const App: React.FC = () => {
     return (
@@ -29,9 +29,6 @@ const App: React.FC = () => {
                                 } />
                                 <Route path="/" element={<LoggedUserLayout />}>
                                     <Route path="/" element={<Navigate to="/themes" />}/>
-                                    <Route path="/questions/list" element={
-                                        <ContentLayout content={<QuestionsList />} />
-                                    } />
                                     {themesRoutes()}
                                     {usersRoutes()}
                                 </Route>

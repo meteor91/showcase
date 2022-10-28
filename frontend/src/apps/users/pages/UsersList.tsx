@@ -4,8 +4,7 @@ import { Link, useNavigate, generatePath } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import moment from 'moment';
-import { dataUtils } from 'core/utils';
+import { dataUtils, renderDate } from 'core/utils';
 import { defaultPageSize } from 'core/consts';
 import { SpaceVertical } from 'core/components/SpaceVertical';
 import { paginationStorage } from 'core/paginationStorage';
@@ -87,7 +86,5 @@ export const UsersList: React.FC = () => {
         </SpaceVertical>
     );
 }
-
-const renderDate = (value: string) => moment.utc(value).format('ll');
 
 const renderUsernameLink = (_value: string, record: IUser) => <Link to={generatePath(routeMap.details.path, {id: record.id})}>{record.username}</Link>

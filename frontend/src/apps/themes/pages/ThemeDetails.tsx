@@ -1,37 +1,27 @@
 import React from 'react';
-import { useParams, useNavigate, generatePath } from 'react-router-dom';
-import { Button, Table, Col, Row, Typography } from 'antd';
-import { ColumnsType } from 'antd/lib/table';
-import { dataUtils } from 'core/utils';
-import { IQuestion } from '../models';
-import { Spinner } from 'core/components/Spinner';
+import { generatePath, useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Button, Col, Descriptions, Row, Space, Table } from 'antd';
+import { dataUtils, isModerator, renderDate } from 'core/utils';
+import { TAppState } from 'core/store';
+import { ErrorResult } from 'core/components/ErrorResult';
+import { Spinner} from 'core/components/Spinner';
 import { SpaceVertical } from 'core/components/SpaceVertical';
 import { routeMap } from '../routeMap';
 import { useDetailsQuery } from '../queries';
-import { ErrorResult } from 'core/components/ErrorResult';
-
-const columns: ColumnsType<IQuestion> = [
-    {
-        title: 'Вопрос',
-        dataIndex : 'label',
-        key: 'label',
-    },
-    {
-        title: 'Ответ',
-        dataIndex : 'answer',
-        key: 'answer',
-    },    
-    {
-        title: 'Цена',
-        dataIndex : 'price',
-        key: 'price'
-    },
-];
+import { ChangeThemeStatus } from '../components/ChangeThemeStatus';
+import { renderStatusSimplified } from '../components/ThemeStatus';
 
 export const ThemeDetails: React.FC = () => {
     const params = useParams();    
-    const {status, data} = useDetailsQuery(params.id!)
+    const {status, data, refetch} = useDetailsQuery(params.id!)
+    const {userRole, locale} = useSelector((state: TAppState) => ({
+        userRole: state.auth.currentUser?.role,
+        locale: state.settings.locale,
+    }));
     const navigate = useNavigate();
+    const {t} = useTranslation();
 
     const handleEdit = () => {
         navigate(generatePath(routeMap.edit.path, {id: params.id}));
@@ -43,24 +33,52 @@ export const ThemeDetails: React.FC = () => {
         return (
             <SpaceVertical>
                 <Row gutter={[16, 16]}>
-                    <Col span={24}><Typography.Text strong>Название: </Typography.Text>{data.label}</Col>
+                    <Col span={24}>
+                        <Descriptions title={data.label} column={2}>
+                            <Descriptions.Item label={t('themes.fieldNames.author')}>{data.createdBy}</Descriptions.Item>
+                            <Descriptions.Item label={t('themes.fieldNames.createdAt')}>{renderDate(data.createdAt)}</Descriptions.Item>
+                            <Descriptions.Item label={t('themes.fieldNames.status')}>{renderStatusSimplified(data.status)}</Descriptions.Item>
+                            <Descriptions.Item label={t('themes.fieldNames.updatedAt')}>{renderDate(data.updatedAt)}</Descriptions.Item>
+                        </Descriptions>
+                    </Col>
                 </Row>
 
                 <Row gutter={[16, 16]}>
                     <Col span={24}>
                         <Table
+                            key={locale}
                             rowKey="id"
                             loading={dataUtils.isLoading(status)}
-                            columns={columns}
                             dataSource={data.questionSet}
                             pagination={false}
-                        />
+                        >
+                            <Table.Column
+                                key="answer"
+                                title={t<string>('themes.questions.answer')}
+                                dataIndex="answer"
+                            />
+                            <Table.Column
+                                key="label"
+                                title={t<string>('themes.questions.label')}
+                                dataIndex="label"
+                            />
+                            <Table.Column
+                                key="price"
+                                title={t<string>('themes.questions.price')}
+                                dataIndex="price"
+                            />
+                        </Table>
                     </Col>
                 </Row>
 
                 <Row>
                     <Col span={24}>
-                        <Button onClick={handleEdit}>Редактировать</Button>
+                        <Space>
+                            {isModerator(userRole) && (
+                                <ChangeThemeStatus status={data.status} themeId={params.id!} onSuccess={() => refetch()}/>
+                            )}
+                            <Button onClick={handleEdit}>{t('common.action.edit')}</Button>
+                        </Space>
                     </Col>
                 </Row>
             </SpaceVertical>

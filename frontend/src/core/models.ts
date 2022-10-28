@@ -36,3 +36,8 @@ export enum ELoadingStatus {
     Error = 'error',
     Success = 'success'
 }
+
+export interface IServerError {
+    errorCode: string;
+    message: string
+}

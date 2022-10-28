@@ -3,11 +3,11 @@ import { generatePath, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {useQuery} from 'react-query';
 import { useTranslation } from 'react-i18next';
-import { Table, Tag } from 'antd';
-import moment from 'moment';
-import { dataUtils } from 'core/utils';
+import { Table } from 'antd';
+import { dataUtils, renderDate } from 'core/utils';
 import { TAppState } from 'core/store';
-import { EThemeStatus, ITheme } from 'apps/themes/models';
+import { ITheme } from 'apps/themes/models';
+import { renderStatus } from 'apps/themes/components/ThemeStatus';
 import { routeMap } from 'apps/themes/routeMap';
 import { getUserLastThemes } from '../api';
 
@@ -54,21 +54,6 @@ export const UserLastThemes: React.FC<IProps> = ({userId}) => {
             />
         </Table>
     );
-}
-
-// TODO: move to utils
-const renderStatus = (_: string, {status}: ITheme) => {
-    if (status===EThemeStatus.ACCEPTED) {
-        return <Tag color="green">Accepted</Tag>;
-    } else if (status===EThemeStatus.ON_MODERATION) {
-        return <Tag color="orange">On moderation</Tag>;
-    } else {
-        return <Tag color="red">Declined</Tag>;
-    }
-}
-
-const renderDate = (value: string) => {
-    return moment.utc(value).format('ll');
 }
 
 const renderThemeLabel = (_value: string, record: ITheme) => (

@@ -65,7 +65,10 @@
       "cancel": "Cancel",
       "edit": "Edit",
       "yes": "Yes",
-      "no": "No"
+      "no": "No",
+      "accept": "Accept",
+      "decline": "Decline",
+      "forModeration": "For moderation"
     },
     "details": "Details",
     "formErrors": {

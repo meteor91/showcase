@@ -1,7 +1,7 @@
 export interface IUser {
     username: string;
     id: string;
-    role: string;
+    role: EUserRole;
 }
 
 export interface ILoginForm {
@@ -15,4 +15,9 @@ export interface IUserDetails extends IUser {
         onModeration: number;
         declined: number;
     }
+}
+
+export enum EUserRole {
+    MODERATOR = 'MODERATOR',
+    BASIC = 'BASIC',
 }

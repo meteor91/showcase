@@ -126,3 +126,5 @@ cypress.sqlite3
 
 frontend/cypress/examples
 backend/static
+
+deploy
