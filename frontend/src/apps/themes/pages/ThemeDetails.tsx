@@ -2,30 +2,37 @@ import React from 'react';
 import { generatePath, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Button, Col, Descriptions, Row, Space, Table } from 'antd';
-import { dataUtils, isModerator, renderDate } from 'core/utils';
+import { Button, Col, Row, Space, Table } from 'antd';
+import { dataUtils, isModerator } from 'core/utils';
 import { TAppState } from 'core/store';
 import { ErrorResult } from 'core/components/ErrorResult';
 import { Spinner} from 'core/components/Spinner';
 import { SpaceVertical } from 'core/components/SpaceVertical';
-import { routeMap } from '../routeMap';
-import { useDetailsQuery } from '../queries';
+import { useFetchPathData } from 'core/hooks/useFetchPathData';
+import { routeMap, ThemesPaths } from '../routeMap';
 import { ChangeThemeStatus } from '../components/ChangeThemeStatus';
-import { renderStatusSimplified } from '../components/ThemeStatus';
+import { getTheme } from '../api';
+import { ITheme } from '../models';
+import { ThemeInfo } from '../components/ThemeInfo';
 
 export const ThemeDetails: React.FC = () => {
-    const params = useParams();    
-    const {status, data, refetch} = useDetailsQuery(params.id!)
+    const params = useParams<'id'>();
+    const navigate = useNavigate();
+    const {t} = useTranslation();
     const {userRole, locale} = useSelector((state: TAppState) => ({
         userRole: state.auth.currentUser?.role,
         locale: state.settings.locale,
     }));
-    const navigate = useNavigate();
-    const {t} = useTranslation();
+    const {status, data, refetch} = useFetchPathData<ITheme>({
+        path: ['themes', ThemesPaths.details],
+        params,
+        displayFieldName: 'label',
+        query: () => getTheme(params.id!),
+    });
 
     const handleEdit = () => {
         navigate(generatePath(routeMap.edit.path, {id: params.id}));
-    }
+    };
 
     if (dataUtils.isLoading(status)) {
         return <Spinner />;
@@ -34,12 +41,7 @@ export const ThemeDetails: React.FC = () => {
             <SpaceVertical>
                 <Row gutter={[16, 16]}>
                     <Col span={24}>
-                        <Descriptions title={data.label} column={2}>
-                            <Descriptions.Item label={t('themes.fieldNames.author')}>{data.createdBy}</Descriptions.Item>
-                            <Descriptions.Item label={t('themes.fieldNames.createdAt')}>{renderDate(data.createdAt)}</Descriptions.Item>
-                            <Descriptions.Item label={t('themes.fieldNames.status')}>{renderStatusSimplified(data.status)}</Descriptions.Item>
-                            <Descriptions.Item label={t('themes.fieldNames.updatedAt')}>{renderDate(data.updatedAt)}</Descriptions.Item>
-                        </Descriptions>
+                        <ThemeInfo theme={data} />
                     </Col>
                 </Row>
 

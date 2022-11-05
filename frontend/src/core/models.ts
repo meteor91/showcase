@@ -19,9 +19,11 @@ export type ServerValidateErrors<T> = {
     nonFieldErrors?: string[];
 }
 
+//TODO rename fields
 export interface IPath {
     path: string;
     name: string;
+    asyncLabel?: boolean;
 }
 
 export type TRoutePaths<T extends string> = {

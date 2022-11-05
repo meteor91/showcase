@@ -8,19 +8,20 @@ export enum ThemesPaths {
 }
 
 export const routeMap: TRoutePaths<ThemesPaths> = {
-    list: {
+    [ThemesPaths.list]: {
         path: '/themes',
         name: 'themes.theme',
     },
-    create: {
+    [ThemesPaths.create]: {
         path: '/themes/create',
         name: 'common.action.create',
     },   
-    details: {
+    [ThemesPaths.details]: {
         path: '/themes/:id/details',
         name: 'common.details',
+        asyncLabel: true,
     },
-    edit: {
+    [ThemesPaths.edit]: {
         path: '/themes/:id/edit',
         name: 'common.action.edit',
     },

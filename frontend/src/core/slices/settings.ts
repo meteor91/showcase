@@ -1,11 +1,14 @@
-import { createSlice, SliceCaseReducers } from '@reduxjs/toolkit'
+import {createSlice, PayloadAction, SliceCaseReducers} from '@reduxjs/toolkit'
 import { ELoadingStatus } from 'core/models';
 
 interface IState {
     locale: string;
-    pageName: {
-        name?: string | null;
-        status: ELoadingStatus;
+    breadcrumbs: {
+        [key: string]: {
+            label: string | null,
+            status: ELoadingStatus;
+            link: string;
+        }
     }
 
 }
@@ -14,22 +17,24 @@ export const settingsSlice = createSlice<IState, SliceCaseReducers<IState>>({
     name: 'settings',
     initialState: {
         locale: 'EN',
-        pageName: {
-            status: ELoadingStatus.Idle
-        }
+        breadcrumbs: {},
     },
     reducers: {
         setLocale: (state, action) => {
             state.locale = action.payload;
         },
-        setPageName: (state, action) => {
-            state.pageName = action.payload;
-        },
-        clearPageName: state => {
-            state.pageName.name = null;
-            state.pageName.status = ELoadingStatus.Idle;
+        setBreadcrumb: (
+            state,
+            action: PayloadAction<{
+                name: string,
+                label: string,
+                link: string,
+                status: ELoadingStatus,
+            }>) => {
+            const {name, label, status, link} = action.payload
+            state.breadcrumbs[name] = {label, status, link};
         }
     }
 });
 
-export const { setLocale, setPageName, clearPageName } = settingsSlice.actions;
+export const { setLocale, setBreadcrumb } = settingsSlice.actions;

@@ -8,19 +8,20 @@ export enum EUsersPaths {
 }
 
 export const routeMap: TRoutePaths<EUsersPaths> = {
-    list: {
+    [EUsersPaths.list]: {
         path: '/users',
         name: 'users.user',
     },
-    create: {
+    [EUsersPaths.create]: {
         path: '/users/create',
         name: 'common.action.create',
     },
-    details: {
+    [EUsersPaths.details]: {
         path: '/users/:id/details',
         name: 'common.details',
+        asyncLabel: true,
     },
-    edit: {
+    [EUsersPaths.edit]: {
         path: '/users/:id/edit',
         name: 'common.action.edit',
     },

@@ -17,7 +17,6 @@ export const deleteTheme = (theme: ITheme) => del<ITheme>(`/themes/themes/${them
 
 export const editTheme = (theme: ITheme, id: string) => put<ITheme>(`/themes/themes/${id}/`, theme);
 
-//TODO: разобраться с типизацией
-export const getTheme = (id: any) => get<ITheme>(`/themes/themes/${id}/`);
+export const getTheme = (id: string) => get<ITheme>(`/themes/themes/${id}/`);
 
 export const changeThemeStatus = (id: string, nextStatus: EThemeStatus) => post(`/themes/change-theme-status/${id}/${nextStatus}/`, {nextStatus});

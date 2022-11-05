@@ -7,12 +7,10 @@ import 'moment/locale/ru';
 import './App.scss';
 import { store } from 'core/store';
 import { queryClient } from 'core/queryClient';
-import { ContentLayout } from 'core/components/ContentLayout';
-import { QuestionsList } from 'apps/themes/pages/QuestionsList';
 import { LoginPage } from 'core/auth/pages/LoginPage';
 import { CheckAuth } from 'core/auth/components/CheckAuth';
 import { LoggedUserLayout } from 'core/auth/components/LoggedUserLayout';
-import { themesRoutes } from 'apps/themes/Routes';
+import { themesRoutes } from 'apps/themes/routes';
 import { usersRoutes } from 'apps/users/routes';
 import { ConfigProvider } from 'core/components/ConfigProvider';
 

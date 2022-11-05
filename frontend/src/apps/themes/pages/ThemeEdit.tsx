@@ -2,27 +2,32 @@ import React from 'react';
 import { useNavigate, useParams, generatePath } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { dataUtils } from 'core/utils';
-import {ErrorResult} from 'core/components/ErrorResult';
+import { useFetchPathData } from 'core/hooks/useFetchPathData';
+import { ErrorResult } from 'core/components/ErrorResult';
 import { Spinner } from 'core/components/Spinner';
 import { queryClient } from 'core/queryClient';
-import { editTheme } from '../api';
+import { editTheme, getTheme } from '../api';
 import { ITheme, TThemeFieldErrors } from '../models';
 import { ThemeForm } from '../components/ThemeForm';
-import { routeMap } from '../routeMap';
-import { useDetailsQuery } from '../queries';
+import { routeMap, ThemesPaths } from '../routeMap';
 
 export const ThemeEdit: React.FC = () => {
-    const params = useParams();
+    const params = useParams<'id'>();
     const navigate = useNavigate();
 
-    const {status, data} = useDetailsQuery(params.id!);
+    const {status, data} = useFetchPathData<ITheme>({
+        path: ['themes', ThemesPaths.details],
+        params,
+        displayFieldName: 'label',
+        query: () => getTheme(params.id!),
+    });
 
     const mutation = useMutation<ITheme, TThemeFieldErrors, ITheme>(
-        'createTheme', 
+        ThemesPaths.create,
         (theme: ITheme) => editTheme({...theme, id: data?.id}, data?.id || ''), 
         {
             onSuccess: () => {
-                queryClient.removeQueries(['themeDetails', params.id]);
+                queryClient.removeQueries([ThemesPaths.details, params.id]);
                 navigate(generatePath(routeMap.details.path, {id: params.id}));
             },
         }
