@@ -27,7 +27,7 @@ export const ThemeEdit: React.FC = () => {
         (theme: ITheme) => editTheme({...theme, id: data?.id}, data?.id || ''), 
         {
             onSuccess: () => {
-                queryClient.removeQueries([ThemesPaths.details, params.id]);
+                queryClient.removeQueries([ThemesPaths.details, params]);
                 navigate(generatePath(routeMap.details.path, {id: params.id}));
             },
         }

@@ -1,3 +1,4 @@
+from django.db import transaction
 from rest_framework import serializers
 
 from .models import Question, Theme
@@ -35,6 +36,7 @@ class ThemeSerializer(serializers.ModelSerializer):
         model = Theme
         fields = ['id', 'label', 'question_set', 'created_by', 'updated_at', 'created_at', 'status']
 
+    @transaction.atomic
     def create(self, validated_data):
         question_set = validated_data.pop('question_set')
         theme = Theme.objects.create(**validated_data)
@@ -43,7 +45,8 @@ class ThemeSerializer(serializers.ModelSerializer):
             Question.objects.create(theme=theme, created_by=theme.created_by, **question)
 
         return theme
-    
+
+    @transaction.atomic
     def update(self, instance, validated_data):
         label = validated_data.pop('label')
         question_set = validated_data.pop('question_set')
@@ -69,7 +72,7 @@ class ThemeSerializer(serializers.ModelSerializer):
 
         instance.save()
 
-        return instance;
+        return instance
 
     # для проверки отображения серверных ошибок
     def validate_label(self, value):
