@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useTranslation } from "react-i18next";
-import { MinusCircleOutlined, PlusOutlined, CloseOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Select, Drawer, Row, Col, Space } from 'antd';
-import { ITheme, TThemeFieldErrors } from '../models';
-import { ThemeServerValidationErrors } from './ThemeServerValidationErrors';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Select, Row, Col, Space } from 'antd';
+import { ITheme } from '../models';
 
 const { Option } = Select;
 
@@ -11,7 +10,6 @@ interface IProps {
     onSubmit: (theme: ITheme) => void;
     isLoading?: boolean;
     prefill?: ITheme;
-    serverValidationErrors?: TThemeFieldErrors | null;
     onCancel?: () => void;
 }
 
@@ -23,12 +21,8 @@ const iconStyle: React.CSSProperties = {
 
 export const ThemeForm: React.FC<IProps> = (props) => {
 
-    const {onSubmit, onCancel, prefill, serverValidationErrors, isLoading} = props;
-    const [drawlerOpened, setDrawlerOpened] = useState(false);
+    const {onSubmit, onCancel, prefill, isLoading} = props;
     const {t} = useTranslation();
-    useEffect(() => {
-        serverValidationErrors && setDrawlerOpened(true);
-    }, [serverValidationErrors]);
 
     return (
         <Form
@@ -120,14 +114,6 @@ export const ThemeForm: React.FC<IProps> = (props) => {
                     )}
                 </Space>
             </Form.Item>
-            <Drawer
-                open={drawlerOpened}
-                onClose={() => setDrawlerOpened(false)}
-                data-testid="drawler"
-                closeIcon={<CloseOutlined data-testid="closeErrorsDrawler"/>}
-            >
-                <ThemeServerValidationErrors serverErrors={serverValidationErrors}/>
-            </Drawer>
         </Form>
     );
 }

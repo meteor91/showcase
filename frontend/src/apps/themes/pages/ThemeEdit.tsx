@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, generatePath } from 'react-router-dom';
 import { useMutation } from 'react-query';
+import { Drawer } from 'antd';
+import { CloseOutlined } from '@ant-design/icons';
 import { dataUtils } from 'core/utils';
 import { useFetchPathData } from 'core/hooks/useFetchPathData';
 import { ErrorResult } from 'core/components/ErrorResult';
@@ -10,6 +12,7 @@ import { editTheme, getTheme } from '../api';
 import { ITheme, TThemeFieldErrors } from '../models';
 import { ThemeForm } from '../components/ThemeForm';
 import { routeMap, ThemesPaths } from '../routeMap';
+import { ThemeServerValidationErrors } from '../components/ThemeServerValidationErrors';
 
 export const ThemeEdit: React.FC = () => {
     const params = useParams<'id'>();
@@ -33,17 +36,31 @@ export const ThemeEdit: React.FC = () => {
         }
     );
 
+    const [drawlerOpened, setDrawlerOpened] = useState(false);
+    useEffect(() => {
+        mutation.error && setDrawlerOpened(true);
+    }, [mutation.error]);
+
     if (dataUtils.isLoading(status)) {
         return <Spinner />;
     } else if (dataUtils.isReady(status) && data) {
         return (
-            <ThemeForm 
-                onSubmit={mutation.mutate}
-                isLoading={mutation.isLoading}
-                serverValidationErrors={mutation.error}
-                prefill={data}
-                onCancel={() => navigate(generatePath(routeMap.list.path))}
-            />
+            <>
+                <ThemeForm
+                    onSubmit={mutation.mutate}
+                    isLoading={mutation.isLoading}
+                    prefill={data}
+                    onCancel={() => navigate(generatePath(routeMap.list.path))}
+                />
+                <Drawer
+                    open={drawlerOpened}
+                    onClose={() => setDrawlerOpened(false)}
+                    data-testid="drawler"
+                    closeIcon={<CloseOutlined data-testid="closeErrorsDrawler"/>}
+                >
+                    <ThemeServerValidationErrors serverErrors={mutation.error}/>
+                </Drawer>
+            </>
         );
     } else {
         return <ErrorResult />
